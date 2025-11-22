@@ -4,6 +4,36 @@
  * @packageDocumentation
  */
 
+// Export all core types
+export type {
+  ValidationResult,
+  ValidatorResult,
+  ValidatorConfig,
+  ValidatorOptions,
+  ValidationError as ValidationErrorType,
+  ErrorSeverity,
+} from './types';
+
+export { ErrorCode } from './types';
+
+// Export configuration manager
+export { ConfigManager } from './config/config';
+export type { Config, MergedConfig } from './config/config';
+
+// Export error classes
+export {
+  ValidationError,
+  ConfigurationError,
+  NetworkError,
+  TimeoutError,
+  createError,
+  ERROR_MESSAGES,
+} from './errors/errors';
+
+// Export logger utility
+export { Logger, createLogger, getLogger } from './utils/logger';
+export type { LogLevel, LoggerConfig } from './utils/logger';
+
 /**
  * Placeholder function for initial setup
  * Will be replaced with actual validation logic
