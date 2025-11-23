@@ -617,13 +617,16 @@ __metadata:
   resolution: "@mailtest/core@workspace:packages/core"
   dependencies:
     "@eslint/js": "npm:^9.39.1"
+    "@types/mailcheck": "npm:^1.1.37"
     "@types/node": "npm:^24.10.1"
     "@typescript-eslint/eslint-plugin": "npm:^8.47.0"
     "@typescript-eslint/parser": "npm:^8.47.0"
     "@vitest/coverage-v8": "npm:^4.0.12"
+    disposable-email-domains: "npm:^1.0.62"
     eslint: "npm:^9.39.1"
     eslint-config-prettier: "npm:^10.1.8"
     eslint-plugin-prettier: "npm:^5.5.4"
+    mailcheck: "npm:^1.1.1"
     prettier: "npm:^3.6.2"
     tsup: "npm:^8.5.1"
     typescript: "npm:^5.9.3"
@@ -914,6 +917,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@types/jquery@npm:*":
+  version: 3.5.33
+  resolution: "@types/jquery@npm:3.5.33"
+  dependencies:
+    "@types/sizzle": "npm:*"
+  checksum: d96c42762b7370ddf3b81cdad436a79d275e0ff09e2f4d7fbf2bbd8f97acef4110a11f1c3cb683195a1eba4fd9959e59d73f84d56ce2c010907a2bea696eb057
+  languageName: node
+  linkType: hard
+
 "@types/json-schema@npm:^7.0.15":
   version: 7.0.15
   resolution: "@types/json-schema@npm:7.0.15"
@@ -927,6 +939,15 @@ __metadata:
   dependencies:
     "@types/node": "npm:*"
   checksum: ff8f54fc49621210291f815fe5b15d809fd7d032941b3180743440bd507ecdf08b9e844625fa346af568c84bf34114eb378dcdc3e921a08ba1e2a08d7e3c809c
+  languageName: node
+  linkType: hard
+
+"@types/mailcheck@npm:^1.1.37":
+  version: 1.1.37
+  resolution: "@types/mailcheck@npm:1.1.37"
+  dependencies:
+    "@types/jquery": "npm:*"
+  checksum: 1035c73e1759eec51fc30bc49c5a8a52bfa37a3f6b60e90b4206be52a9d15e6109fe19500004e4f7cc31d669ad686e1064773c5dcff17382ddcf9fd17bf26948
   languageName: node
   linkType: hard
 
@@ -961,6 +982,13 @@ __metadata:
   version: 7.7.1
   resolution: "@types/semver@npm:7.7.1"
   checksum: c938aef3bf79a73f0f3f6037c16e2e759ff40c54122ddf0b2583703393d8d3127130823facb880e694caa324eb6845628186aac1997ee8b31dc2d18fafe26268
+  languageName: node
+  linkType: hard
+
+"@types/sizzle@npm:*":
+  version: 2.3.10
+  resolution: "@types/sizzle@npm:2.3.10"
+  checksum: d43ec1cd0b5e1f66b1abeaf359608853629cd3d6b8dc8b3b40b85a5ee2ce149a4485ccd7eee5c58b5a2814d384f5a951f1dab5d49041ad83457270cb2bc66fe7
   languageName: node
   linkType: hard
 
@@ -1717,6 +1745,13 @@ __metadata:
   version: 5.2.0
   resolution: "diff@npm:5.2.0"
   checksum: aed0941f206fe261ecb258dc8d0ceea8abbde3ace5827518ff8d302f0fc9cc81ce116c4d8f379151171336caf0516b79e01abdc1ed1201b6440d895a66689eb4
+  languageName: node
+  linkType: hard
+
+"disposable-email-domains@npm:^1.0.62":
+  version: 1.0.62
+  resolution: "disposable-email-domains@npm:1.0.62"
+  checksum: 556062c5bc93cb712e7b6d05323555d0940b2ffbcdd560a21e23cf56fccf7fd71e623091891b04616326974e7c0880357df8627e40f280edd92a7c513376e983
   languageName: node
   linkType: hard
 
@@ -2761,6 +2796,13 @@ __metadata:
     "@babel/types": "npm:^7.28.5"
     source-map-js: "npm:^1.2.1"
   checksum: a00bbf3688b9b3e83c10b3bfe3f106cc2ccbf20c4f2dc1c9020a10556dfe0a6a6605a445ee8e86a6e2b484ec519a657b5e405532684f72678c62e4c0d32f962c
+  languageName: node
+  linkType: hard
+
+"mailcheck@npm:^1.1.1":
+  version: 1.1.1
+  resolution: "mailcheck@npm:1.1.1"
+  checksum: e339ea6068795678cb7beeee191e5c366926f86ed9e578ae5c32cd9d635313fe509a840f19b06a9e559947beed7fbaa0feeb0f472d3da03a91784172f17c249b
   languageName: node
   linkType: hard
 
