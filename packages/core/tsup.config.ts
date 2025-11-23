@@ -31,10 +31,13 @@ export default defineConfig({
   // External dependencies (don't bundle)
   external: [],
   
+  // Force bundle these packages (needed for disposable-email-domains JSON)
+  noExternal: ['disposable-email-domains'],
+  
   // Tree shaking
   treeshake: true,
   
-  // Skip node_modules
+  // Skip node_modules (but noExternal overrides this for specific packages)
   skipNodeModulesBundle: true,
 });
 
