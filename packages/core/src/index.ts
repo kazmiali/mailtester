@@ -8,6 +8,8 @@ import { ConfigManager, type Config, type MergedConfig } from './config/config';
 import { createContext } from './context';
 import { ValidationOrchestrator } from './orchestrator';
 import type { ValidationResult } from './types';
+import { BulkProcessor } from './bulk';
+import type { BulkValidationOptions, BulkValidationResult } from './bulk';
 
 /**
  * Validator instance returned by createValidator()
@@ -68,6 +70,14 @@ export {
 // Export logger utility
 export { Logger, createLogger, getLogger } from './utils/logger';
 export type { LogLevel, LoggerConfig } from './utils/logger';
+
+// Export bulk validation
+export { BulkProcessor } from './bulk';
+export type { BulkValidationOptions, BulkValidationResult } from './bulk';
+
+// Export rate limiter
+export { RateLimiter } from './rate-limit/limiter';
+export type { RateLimitConfig, RateLimiterOptions } from './rate-limit/limiter';
 
 // Export validators
 export {
@@ -183,6 +193,54 @@ export function createValidator(config?: Config): ValidatorInstance {
       return mergedConfig;
     },
   };
+}
+
+/**
+ * Bulk email validation function
+ *
+ * Validates multiple email addresses concurrently with configurable
+ * concurrency limits, progress tracking, and rate limiting.
+ *
+ * @param emails - Array of email addresses to validate
+ * @param options - Optional bulk validation configuration
+ * @returns Bulk validation result with all individual results and statistics
+ *
+ * @example
+ * ```typescript
+ * const emails = ['user1@example.com', 'user2@example.com'];
+ * const result = await validateBulk(emails);
+ * console.log(result.valid); // 2
+ * console.log(result.results[0].valid); // true
+ * ```
+ *
+ * @example
+ * ```typescript
+ * const emails = Array(100).fill(0).map((_, i) => `user${i}@gmail.com`);
+ * const result = await validateBulk(emails, {
+ *   concurrency: 10,
+ *   onProgress: (completed, total) => {
+ *     console.log(`Progress: ${completed}/${total}`);
+ *   },
+ *   config: { preset: 'balanced' }
+ * });
+ * ```
+ *
+ * @example
+ * ```typescript
+ * const result = await validateBulk(emails, {
+ *   continueOnError: true,
+ *   rateLimit: {
+ *     global: { requests: 100, window: 60 }
+ *   }
+ * });
+ * ```
+ */
+export async function validateBulk(
+  emails: string[],
+  options?: BulkValidationOptions
+): Promise<BulkValidationResult> {
+  const processor = new BulkProcessor();
+  return await processor.process(emails, options);
 }
 
 /**

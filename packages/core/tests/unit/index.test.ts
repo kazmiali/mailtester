@@ -2,7 +2,7 @@
  * Public API tests for mailtest
  */
 import { describe, it, expect } from 'vitest';
-import { validate, createValidator, VERSION } from '../../src/index';
+import { validate, createValidator, validateBulk, VERSION } from '../../src/index';
 
 describe('mailtest setup verification', () => {
   it('should export VERSION constant', () => {
@@ -19,6 +19,11 @@ describe('mailtest setup verification', () => {
   it('should export createValidator function', () => {
     expect(createValidator).toBeDefined();
     expect(typeof createValidator).toBe('function');
+  });
+
+  it('should export validateBulk function', () => {
+    expect(validateBulk).toBeDefined();
+    expect(typeof validateBulk).toBe('function');
   });
 });
 
@@ -216,5 +221,259 @@ describe('createValidator() - factory function', () => {
     expect(strictValidator.getConfig().validators.smtp.enabled).toBe(true);
     expect(balancedValidator.getConfig().validators.smtp.enabled).toBe(false);
     expect(permissiveValidator.getConfig().validators.regex.enabled).toBe(true);
+  });
+});
+
+describe('validateBulk() - bulk validation function', () => {
+  describe('basic functionality', () => {
+    it('should validate multiple emails concurrently', async () => {
+      const emails = ['user1@example.com', 'user2@example.com', 'user3@example.com'];
+
+      const result = await validateBulk(emails, {
+        config: {
+          preset: 'permissive', // Only regex validation for speed
+        },
+      });
+
+      expect(result).toBeDefined();
+      expect(result.results).toHaveLength(3);
+      expect(result.total).toBe(3);
+      expect(result.results[0]?.email).toBe('user1@example.com');
+      expect(result.results[1]?.email).toBe('user2@example.com');
+      expect(result.results[2]?.email).toBe('user3@example.com');
+    });
+
+    it('should return empty result for empty array', async () => {
+      const result = await validateBulk([]);
+
+      expect(result.results).toHaveLength(0);
+      expect(result.total).toBe(0);
+      expect(result.valid).toBe(0);
+      expect(result.invalid).toBe(0);
+      expect(result.errors).toBe(0);
+      expect(result.duration).toBeGreaterThanOrEqual(0);
+    });
+
+    it('should validate 100 emails concurrently', async () => {
+      const emails = Array(100)
+        .fill(0)
+        .map((_, i) => `user${i}@gmail.com`);
+
+      const start = Date.now();
+      const result = await validateBulk(emails, {
+        concurrency: 10,
+        config: {
+          preset: 'permissive', // Only regex validation for speed
+        },
+      });
+      const duration = Date.now() - start;
+
+      expect(result.results).toHaveLength(100);
+      expect(result.total).toBe(100);
+      expect(duration).toBeLessThan(5000); // < 5 seconds
+    });
+  });
+
+  describe('progress callbacks', () => {
+    it('should track progress correctly', async () => {
+      const emails = Array(50)
+        .fill(0)
+        .map((_, i) => `user${i}@gmail.com`);
+      let progressCalls = 0;
+      let lastCompleted = 0;
+      let lastTotal = 0;
+
+      await validateBulk(emails, {
+        config: {
+          preset: 'permissive', // Only regex validation for speed
+        },
+        onProgress: (completed, total) => {
+          progressCalls++;
+          expect(completed).toBeGreaterThanOrEqual(lastCompleted);
+          expect(completed).toBeLessThanOrEqual(total);
+          expect(total).toBe(50);
+          lastCompleted = completed;
+          lastTotal = total;
+        },
+      });
+
+      expect(progressCalls).toBeGreaterThan(0);
+      expect(lastCompleted).toBe(50);
+      expect(lastTotal).toBe(50);
+    });
+
+    it('should call progress callback for each completed email', async () => {
+      const emails = ['user1@example.com', 'user2@example.com', 'user3@example.com'];
+      const progressCalls: Array<[number, number]> = [];
+
+      await validateBulk(emails, {
+        config: {
+          preset: 'permissive', // Only regex validation for speed
+        },
+        onProgress: (completed, total) => {
+          progressCalls.push([completed, total]);
+        },
+      });
+
+      expect(progressCalls.length).toBeGreaterThanOrEqual(3);
+      expect(progressCalls[progressCalls.length - 1]).toEqual([3, 3]);
+    });
+  });
+
+  describe('error handling', () => {
+    it('should continue on error when configured', async () => {
+      const emails = ['valid@gmail.com', 'invalid', 'another@gmail.com'];
+
+      const result = await validateBulk(emails, {
+        continueOnError: true,
+        config: {
+          preset: 'permissive', // Only regex validation for speed
+        },
+      });
+
+      expect(result.results).toHaveLength(3);
+      expect(result.results[0]?.valid).toBe(true);
+      expect(result.results[1]?.valid).toBe(false);
+      expect(result.results[2]?.valid).toBe(true);
+      expect(result.errors).toBeGreaterThanOrEqual(0);
+    });
+
+    it('should handle mixed valid and invalid emails', async () => {
+      const emails = [
+        'valid@gmail.com',
+        'invalid-email',
+        'another@gmail.com',
+        'test@mailinator.com', // Disposable
+        'valid@example.com',
+      ];
+
+      const result = await validateBulk(emails, {
+        continueOnError: true,
+        config: {
+          preset: 'permissive', // Only regex validation for speed
+        },
+      });
+
+      expect(result.results).toHaveLength(5);
+      expect(result.total).toBe(5);
+      expect(result.valid + result.invalid).toBeLessThanOrEqual(5);
+    });
+  });
+
+  describe('concurrency control', () => {
+    it('should respect concurrency limit', async () => {
+      const emails = Array(20)
+        .fill(0)
+        .map((_, i) => `user${i}@gmail.com`);
+
+      const result = await validateBulk(emails, {
+        concurrency: 5,
+        config: {
+          preset: 'permissive', // Only regex validation for speed
+        },
+      });
+
+      expect(result.results).toHaveLength(20);
+      expect(result.total).toBe(20);
+    });
+
+    it('should handle single concurrency', async () => {
+      const emails = ['user1@example.com', 'user2@example.com', 'user3@example.com'];
+
+      const result = await validateBulk(emails, {
+        concurrency: 1,
+        config: {
+          preset: 'permissive', // Only regex validation for speed
+        },
+      });
+
+      expect(result.results).toHaveLength(3);
+      expect(result.total).toBe(3);
+    });
+  });
+
+  describe('configuration options', () => {
+    it('should use provided configuration', async () => {
+      const emails = ['user@example.com', 'test@mailinator.com'];
+
+      const result = await validateBulk(emails, {
+        config: {
+          preset: 'strict',
+          validators: {
+            disposable: { enabled: true },
+            smtp: { enabled: false }, // Disable SMTP for speed
+          },
+        },
+      });
+
+      expect(result.results).toHaveLength(2);
+      // First email should be valid
+      expect(result.results[0]?.valid).toBe(true);
+      // Second email should be invalid (disposable)
+      expect(result.results[1]?.valid).toBe(false);
+      expect(result.results[1]?.reason).toBe('disposable');
+    });
+
+    it('should use default configuration when not provided', async () => {
+      const emails = ['user@example.com'];
+
+      const result = await validateBulk(emails, {
+        config: {
+          preset: 'permissive', // Only regex validation for speed
+        },
+      });
+
+      expect(result.results).toHaveLength(1);
+      expect(result.results[0]?.valid).toBe(true);
+    });
+  });
+
+  describe('result structure', () => {
+    it('should return correct statistics', async () => {
+      const emails = [
+        'valid@gmail.com',
+        'invalid-email',
+        'another@gmail.com',
+        'test@mailinator.com', // Disposable
+      ];
+
+      const result = await validateBulk(emails, {
+        config: {
+          preset: 'permissive', // Only regex validation for speed
+        },
+      });
+
+      expect(result.total).toBe(4);
+      expect(result.valid + result.invalid).toBeLessThanOrEqual(4);
+      expect(result.errors).toBeGreaterThanOrEqual(0);
+      expect(result.duration).toBeGreaterThanOrEqual(0);
+    });
+
+    it('should include duration in result', async () => {
+      const emails = ['user@example.com'];
+
+      const result = await validateBulk(emails, {
+        config: {
+          preset: 'permissive', // Only regex validation for speed
+        },
+      });
+
+      expect(result.duration).toBeGreaterThanOrEqual(0);
+      expect(typeof result.duration).toBe('number');
+    });
+
+    it('should preserve order of results', async () => {
+      const emails = ['first@example.com', 'second@example.com', 'third@example.com'];
+
+      const result = await validateBulk(emails, {
+        config: {
+          preset: 'permissive', // Only regex validation for speed
+        },
+      });
+
+      expect(result.results[0]?.email).toBe('first@example.com');
+      expect(result.results[1]?.email).toBe('second@example.com');
+      expect(result.results[2]?.email).toBe('third@example.com');
+    });
   });
 });

@@ -88,7 +88,7 @@ export interface ValidationResult {
   score: number;
 
   /** Which validator failed (if invalid) */
-  reason?: 'regex' | 'typo' | 'disposable' | 'mx' | 'smtp' | 'custom';
+  reason?: 'regex' | 'typo' | 'disposable' | 'mx' | 'smtp' | 'custom' | 'rate-limit';
 
   /** Results from each validator */
   validators: {
