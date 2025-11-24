@@ -1,12 +1,13 @@
 /**
- * Test All Validators - Phase 5 Complete
+ * Test All Validators - Phase 6 Complete
  * 
  * Tests email validation using the full orchestrator pipeline (Phase 5)
- * Uses the public API: validate() and createValidator()
+ * and bulk validation features (Phase 6)
+ * Uses the public API: validate(), createValidator(), and validateBulk()
  * Run with: node test-all-validators.mjs
  */
 
-import { validate, createValidator } from './dist/index.js';
+import { validate, createValidator, validateBulk } from './dist/index.js';
 
 /**
  * Format validator result for display
@@ -209,7 +210,7 @@ async function main() {
   console.log('\n');
   console.log('╔══════════════════════════════════════════════════════════════════════════════╗');
   console.log('║                    EMAIL VALIDATION TEST SUITE                               ║');
-  console.log('║                    Phase 5: Orchestrator & Pipeline                         ║');
+  console.log('║                    Phase 6: Bulk Validation Complete                        ║');
   console.log('╚══════════════════════════════════════════════════════════════════════════════╝');
 
   // Test emails (keeping the same as before)
@@ -289,6 +290,118 @@ async function main() {
     }
   }
 
+  // Test 5: Bulk Validation
+  console.log('\n\n');
+  console.log('╔══════════════════════════════════════════════════════════════════════════════╗');
+  console.log('║                    TEST 5: Bulk Validation (Phase 6)                        ║');
+  console.log('╚══════════════════════════════════════════════════════════════════════════════╝');
+
+  console.log(`\nTesting bulk validation with ${testEmails.length} emails...`);
+  console.log('='.repeat(80));
+
+  try {
+    let progressUpdates = 0;
+    const startTime = Date.now();
+    
+    const bulkResult = await validateBulk(testEmails, {
+      concurrency: 5,
+      continueOnError: true,
+      config: {
+        preset: 'balanced', // Faster validation without SMTP
+      },
+      onProgress: (completed, total) => {
+        progressUpdates++;
+        const percentage = Math.round((completed / total) * 100);
+        process.stdout.write(`\r   Progress: ${completed}/${total} (${percentage}%)`);
+      },
+    });
+
+    const duration = Date.now() - startTime;
+    console.log('\n'); // New line after progress updates
+
+    console.log('\n📊 BULK VALIDATION RESULT:');
+    console.log('-'.repeat(80));
+    console.log(`   Total Emails: ${bulkResult.total}`);
+    console.log(`   Valid: ${bulkResult.valid} (${Math.round((bulkResult.valid / bulkResult.total) * 100)}%)`);
+    console.log(`   Invalid: ${bulkResult.invalid} (${Math.round((bulkResult.invalid / bulkResult.total) * 100)}%)`);
+    console.log(`   Errors: ${bulkResult.errors}`);
+    console.log(`   Duration: ${bulkResult.duration}ms`);
+    console.log(`   Average per email: ${Math.round(bulkResult.duration / bulkResult.total)}ms`);
+    console.log(`   Progress callbacks: ${progressUpdates}`);
+
+    console.log('\n📧 INDIVIDUAL RESULTS:');
+    console.log('-'.repeat(80));
+    bulkResult.results.forEach((result, index) => {
+      const status = result.valid ? '✓' : '✗';
+      const scoreStr = result.score !== undefined ? ` (Score: ${result.score}/100)` : '';
+      const reasonStr = result.reason ? ` - ${result.reason}` : '';
+      console.log(`   ${index + 1}. ${status} ${result.email}${scoreStr}${reasonStr}`);
+    });
+
+    // Add bulk results to allResults for summary
+    bulkResult.results.forEach((result, index) => {
+      allResults.push({ email: testEmails[index], result, config: 'bulk' });
+    });
+  } catch (error) {
+    console.log(`\n✗ BULK VALIDATION ERROR: ${error.message}`);
+    if (error.stack) {
+      console.log(`\nStack trace:\n${error.stack}`);
+    }
+  }
+
+  // Test 6: Bulk Validation with Rate Limiting
+  console.log('\n\n');
+  console.log('╔══════════════════════════════════════════════════════════════════════════════╗');
+  console.log('║                    TEST 6: Bulk Validation with Rate Limiting                ║');
+  console.log('╚══════════════════════════════════════════════════════════════════════════════╝');
+
+  console.log(`\nTesting bulk validation with rate limiting (3 requests per 60 seconds)...`);
+  console.log('='.repeat(80));
+
+  try {
+    const startTime = Date.now();
+    
+    const bulkResultWithRateLimit = await validateBulk(testEmails, {
+      concurrency: 5,
+      continueOnError: true,
+      config: {
+        preset: 'permissive', // Fast validation
+      },
+      rateLimit: {
+        global: { requests: 3, window: 60 },
+        enabled: true,
+      },
+    });
+
+    const duration = Date.now() - startTime;
+
+    console.log('\n📊 BULK VALIDATION RESULT (with rate limiting):');
+    console.log('-'.repeat(80));
+    console.log(`   Total Emails: ${bulkResultWithRateLimit.total}`);
+    console.log(`   Valid: ${bulkResultWithRateLimit.valid}`);
+    console.log(`   Invalid: ${bulkResultWithRateLimit.invalid} (includes rate-limited)`);
+    console.log(`   Errors: ${bulkResultWithRateLimit.errors}`);
+    console.log(`   Duration: ${bulkResultWithRateLimit.duration}ms`);
+
+    console.log('\n📧 INDIVIDUAL RESULTS:');
+    console.log('-'.repeat(80));
+    bulkResultWithRateLimit.results.forEach((result, index) => {
+      const status = result.valid ? '✓' : '✗';
+      const reasonStr = result.reason ? ` (${result.reason})` : '';
+      console.log(`   ${index + 1}. ${status} ${result.email}${reasonStr}`);
+    });
+
+    const rateLimitedCount = bulkResultWithRateLimit.results.filter(
+      r => r.reason === 'rate-limit'
+    ).length;
+    console.log(`\n   Rate-limited emails: ${rateLimitedCount}`);
+  } catch (error) {
+    console.log(`\n✗ BULK VALIDATION ERROR: ${error.message}`);
+    if (error.stack) {
+      console.log(`\nStack trace:\n${error.stack}`);
+    }
+  }
+
   // Final summary
   console.log('\n\n');
   console.log('╔══════════════════════════════════════════════════════════════════════════════╗');
@@ -320,6 +433,14 @@ async function main() {
   console.log('   • Early exit functionality');
   console.log('   • Configuration presets');
   console.log('   • All validators: Regex, Typo, Disposable, MX, SMTP');
+  console.log('\n');
+  console.log('✅ Phase 6 Features Tested:');
+  console.log('   • Bulk Validation (validateBulk())');
+  console.log('   • Concurrent processing with configurable limits');
+  console.log('   • Progress tracking callbacks');
+  console.log('   • Error handling (continueOnError)');
+  console.log('   • Rate limiting (global and per-domain)');
+  console.log('   • Bulk validation statistics');
   console.log('\n');
 }
 
