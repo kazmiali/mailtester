@@ -157,12 +157,69 @@ describe('BaseValidator', () => {
       const validator = new TestValidator();
       const result = await validator.validate('user@example.com');
       expect(result.valid).toBe(true);
+      // Test extractLocal indirectly - create validator that uses it
+      class LocalTestValidator extends BaseValidator {
+        constructor() {
+          super('local-test');
+        }
+        async validate(email: string): Promise<ValidatorResult> {
+          const local = this.extractLocal(email);
+          return this.createResult(true, { local });
+        }
+      }
+      const localValidator = new LocalTestValidator();
+      const localResult = await localValidator.validate('user@example.com');
+      expect(localResult.details?.local).toBe('user');
     });
 
     it('should return empty string for invalid email', async () => {
       const validator = new TestValidator();
       const result = await validator.validate('invalid');
       expect(result.valid).toBe(false);
+      // Test extractLocal with no @ symbol
+      class LocalTestValidator extends BaseValidator {
+        constructor() {
+          super('local-test');
+        }
+        async validate(email: string): Promise<ValidatorResult> {
+          const local = this.extractLocal(email);
+          return this.createResult(true, { local });
+        }
+      }
+      const localValidator = new LocalTestValidator();
+      const localResult = await localValidator.validate('invalid');
+      expect(localResult.details?.local).toBe('');
+    });
+
+    it('should extract local part with multiple @ symbols', async () => {
+      class LocalTestValidator extends BaseValidator {
+        constructor() {
+          super('local-test');
+        }
+        async validate(email: string): Promise<ValidatorResult> {
+          const local = this.extractLocal(email);
+          return this.createResult(true, { local });
+        }
+      }
+      const localValidator = new LocalTestValidator();
+      // lastIndexOf('@') will find the last @
+      const localResult = await localValidator.validate('user@name@example.com');
+      expect(localResult.details?.local).toBe('user@name');
+    });
+
+    it('should handle empty string', async () => {
+      class LocalTestValidator extends BaseValidator {
+        constructor() {
+          super('local-test');
+        }
+        async validate(email: string): Promise<ValidatorResult> {
+          const local = this.extractLocal(email);
+          return this.createResult(true, { local });
+        }
+      }
+      const localValidator = new LocalTestValidator();
+      const localResult = await localValidator.validate('');
+      expect(localResult.details?.local).toBe('');
     });
   });
 });

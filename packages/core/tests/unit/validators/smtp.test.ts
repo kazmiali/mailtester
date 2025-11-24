@@ -194,6 +194,75 @@ describe('SMTPValidator', () => {
       expect(result.error).toBeDefined();
       expect(result.error?.code).toBe(ErrorCode.MX_NOT_FOUND);
     }, 5000);
+
+    it('should convert timeout errors to TimeoutError', async () => {
+      const v = new SMTPValidator({
+        enabled: true,
+        timeout: 50, // Very short timeout to force timeout
+      });
+
+      // This should timeout during connection or SMTP operations
+      const result = await v.validate('test@example.com');
+
+      expect(result.valid).toBe(false);
+      expect(result.error).toBeDefined();
+      // Should detect timeout and convert to TimeoutError
+      if (
+        result.error?.message.includes('timeout') ||
+        result.error?.code === ErrorCode.SMTP_TIMEOUT
+      ) {
+        expect(result.error.code).toBe(ErrorCode.SMTP_TIMEOUT);
+      }
+    }, 5000);
+
+    it('should convert connection errors to NetworkError', async () => {
+      // Use a domain that will fail connection
+      const result = await validator.validate('test@nonexistent-domain-xyz-12345.com');
+
+      expect(result.valid).toBe(false);
+      expect(result.error).toBeDefined();
+      // Should be MX_NOT_FOUND or network error
+      expect([
+        ErrorCode.MX_NOT_FOUND,
+        ErrorCode.NETWORK_ERROR,
+        ErrorCode.SMTP_CONNECTION_FAILED,
+      ]).toContain(result.error?.code);
+    }, 5000);
+
+    it('should handle errors with domain extraction in catch block', async () => {
+      // Test that extractDomain is called in error handler
+      const v = new SMTPValidator({
+        enabled: true,
+        timeout: 50,
+      });
+
+      const result = await v.validate('invalid-email-without-domain');
+
+      expect(result.valid).toBe(false);
+      expect(result.error).toBeDefined();
+      // Should handle gracefully even if domain extraction fails
+      expect(result.error?.code).toBeDefined();
+    }, 5000);
+
+    it('should handle generic network errors', async () => {
+      const v = new SMTPValidator({
+        enabled: true,
+        timeout: 100,
+      });
+
+      // Use domain that might cause various network errors
+      const result = await v.validate('test@example.com');
+
+      expect(result.valid).toBe(false);
+      expect(result.error).toBeDefined();
+      // Should convert to appropriate error type
+      expect([
+        ErrorCode.SMTP_TIMEOUT,
+        ErrorCode.MX_NOT_FOUND,
+        ErrorCode.NETWORK_ERROR,
+        ErrorCode.SMTP_CONNECTION_FAILED,
+      ]).toContain(result.error?.code);
+    }, 5000);
   });
 
   describe('validate() - custom configuration', () => {

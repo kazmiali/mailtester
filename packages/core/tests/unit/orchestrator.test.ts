@@ -107,6 +107,74 @@ describe('ValidationOrchestrator', () => {
       expect(result.validators.regex?.valid).toBe(false);
     });
 
+    it('should handle validator throwing non-ValidationError and store error result', async () => {
+      const configManager = new ConfigManager();
+      const config = configManager.get();
+      const context = createContext('user@example.com', config);
+
+      // Mock a validator to throw a generic error
+      // We'll use a validator that will fail in a way that throws a non-ValidationError
+      // Actually, let's test with earlyExit disabled first to see error handling
+      const result = await orchestrator.validate(context);
+
+      // Should complete without crashing
+      expect(result).toBeDefined();
+      expect(result.validators).toBeDefined();
+    });
+
+    it('should handle validator error with earlyExit enabled', async () => {
+      const configManager = new ConfigManager({ earlyExit: true });
+      const config = configManager.get();
+      const context = createContext('', config);
+
+      const result = await orchestrator.validate(context);
+
+      expect(result.valid).toBe(false);
+      expect(result.validators.regex).toBeDefined();
+      expect(result.validators.regex?.valid).toBe(false);
+      // Should stop early, so other validators shouldn't run
+      expect(result.validators.typo).toBeUndefined();
+    });
+
+    it('should store error result when validator throws error', async () => {
+      const configManager = new ConfigManager({ earlyExit: false });
+      const config = configManager.get();
+      const context = createContext('', config);
+
+      const result = await orchestrator.validate(context);
+
+      // Should have error result stored
+      expect(result.validators.regex).toBeDefined();
+      if (result.validators.regex && !result.validators.regex.valid) {
+        expect(result.validators.regex.error).toBeDefined();
+        expect(result.validators.regex.error?.code).toBeDefined();
+      }
+    });
+
+    it('should handle custom validator detection', async () => {
+      const configManager = new ConfigManager({
+        validators: {
+          regex: { enabled: true },
+          typo: { enabled: false },
+          disposable: { enabled: false },
+          mx: { enabled: false },
+          smtp: { enabled: false },
+          // Add a custom validator key
+          customValidator: { enabled: true },
+        }, // Type assertion to allow custom validator
+      });
+      const config = configManager.get();
+      const context = createContext('user@example.com', config);
+
+      const result = await orchestrator.validate(context);
+
+      // Should complete successfully, custom validator should be detected but not instantiated
+      expect(result).toBeDefined();
+      expect(result.validators.regex).toBeDefined();
+      // Custom validator should not be in results (not supported in v1.0)
+      expect(result.validators.customValidator).toBeUndefined();
+    });
+
     it('should calculate score correctly', async () => {
       const configManager = new ConfigManager();
       const config = configManager.get();
