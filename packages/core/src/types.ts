@@ -99,6 +99,15 @@ export interface ValidationResult {
     smtp?: ValidatorResult;
     [customValidator: string]: ValidatorResult | undefined;
   };
+
+  /** Optional metadata about the validation */
+  metadata?: {
+    /** Timestamp when validation completed (ISO 8601 string) */
+    timestamp?: string;
+
+    /** Duration of validation in milliseconds */
+    duration?: number;
+  };
 }
 
 /**

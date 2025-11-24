@@ -16,6 +16,7 @@ import { MXValidator, type MXValidatorConfig } from './validators/mx';
 import { SMTPValidator, type SMTPValidatorConfig } from './validators/smtp';
 import { BaseValidator } from './validators/base';
 import { getLogger } from './utils/logger';
+import { ResultFormatter } from './output/formatter';
 
 const logger = getLogger();
 
@@ -33,6 +34,11 @@ const logger = getLogger();
  * ```
  */
 export class ValidationOrchestrator {
+  private formatter: ResultFormatter;
+
+  constructor() {
+    this.formatter = new ResultFormatter();
+  }
   /**
    * Run the validation pipeline
    *
@@ -110,7 +116,7 @@ export class ValidationOrchestrator {
     }
 
     // Format and return final result
-    return this.formatResult(context);
+    return this.formatter.format(context);
   }
 
   /**
@@ -178,121 +184,5 @@ export class ValidationOrchestrator {
       smtp?: SMTPValidator;
       [key: string]: BaseValidator | undefined;
     };
-  }
-
-  /**
-   * Format final validation result from context
-   *
-   * Aggregates all validator results and calculates overall validity and score.
-   *
-   * @param context - Validation context with results
-   * @returns Formatted validation result
-   */
-  private formatResult(context: ValidationContext): ValidationResult {
-    const { email, results, startTime } = context;
-
-    // Determine overall validity
-    // Email is valid if all validators that ran passed
-    // Note: Typo validator warnings don't fail validation
-    let valid = true;
-    let reason: ValidationResult['reason'] | undefined;
-
-    // Check each validator result
-    for (const [validatorName, result] of Object.entries(results)) {
-      if (result && !result.valid) {
-        // Typo validator warnings don't fail validation
-        if (validatorName === 'typo' && result.error?.severity === 'warning') {
-          continue; // Skip typo warnings, they don't fail validation
-        }
-
-        // This is a real failure
-        valid = false;
-        // Set reason to first failing validator
-        if (!reason) {
-          reason = validatorName as ValidationResult['reason'];
-        }
-      }
-    }
-
-    // Calculate score (simple calculation for now, will be enhanced in Phase 6)
-    const score = this.calculateScore(results);
-
-    // Build validators object
-    const validators: ValidationResult['validators'] = {
-      ...(results.regex && { regex: results.regex }),
-      ...(results.typo && { typo: results.typo }),
-      ...(results.disposable && { disposable: results.disposable }),
-      ...(results.mx && { mx: results.mx }),
-      ...(results.smtp && { smtp: results.smtp }),
-    };
-
-    // Add custom validator results
-    for (const [key, result] of Object.entries(results)) {
-      if (!['regex', 'typo', 'disposable', 'mx', 'smtp'].includes(key) && result) {
-        validators[key] = result;
-      }
-    }
-
-    const duration = Date.now() - startTime;
-    logger.debug(`Validation completed in ${duration}ms. Valid: ${valid}, Score: ${score}`);
-
-    const result: ValidationResult = {
-      valid,
-      email,
-      score,
-      validators,
-    };
-
-    // Only add reason if validation failed
-    if (reason) {
-      result.reason = reason;
-    }
-
-    return result;
-  }
-
-  /**
-   * Calculate reputation score from validator results
-   *
-   * Simple scoring algorithm (will be enhanced in Phase 6):
-   * - Each passing validator contributes points
-   * - Regex: 20 points
-   * - Typo: 10 points (if no typo detected)
-   * - Disposable: 20 points (if not disposable)
-   * - MX: 20 points (if MX records found)
-   * - SMTP: 30 points (if mailbox exists)
-   *
-   * @param results - Validator results
-   * @returns Score from 0-100
-   */
-  private calculateScore(results: ValidationContext['results']): number {
-    let score = 0;
-
-    // Regex validator: 20 points
-    if (results.regex?.valid) {
-      score += 20;
-    }
-
-    // Typo validator: 10 points (if no typo detected)
-    if (results.typo?.valid) {
-      score += 10;
-    }
-
-    // Disposable validator: 20 points (if not disposable)
-    if (results.disposable?.valid) {
-      score += 20;
-    }
-
-    // MX validator: 20 points (if MX records found)
-    if (results.mx?.valid) {
-      score += 20;
-    }
-
-    // SMTP validator: 30 points (if mailbox exists)
-    if (results.smtp?.valid) {
-      score += 30;
-    }
-
-    return Math.min(100, Math.max(0, score));
   }
 }

@@ -52,6 +52,9 @@ export type { ValidationContext } from './context';
 // Export orchestrator
 export { ValidationOrchestrator } from './orchestrator';
 
+// Export formatter
+export { ResultFormatter } from './output/formatter';
+
 // Export error classes
 export {
   ValidationError,
