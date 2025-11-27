@@ -1,7 +1,7 @@
 {
   "name": "@mailtester/core",
   "version": "1.0.0",
-  "description": "Core email validation library for mailtester",
+  "description": "Modern, high-performance email validation with RFC 5322 compliance, typo detection, disposable email blocking, MX verification, and SMTP validation",
   "type": "module",
   "main": "./dist/index.js",
   "module": "./dist/index.mjs",
@@ -38,19 +38,27 @@
     "validation",
     "validator",
     "email-validation",
+    "email-validator",
+    "smtp",
+    "mx",
+    "dns",
+    "disposable",
+    "typo",
+    "rfc5322",
+    "bulk-validation",
     "typescript"
   ],
   "author": "Ali Kazmi",
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/alikazmi/mailtester.git",
+    "url": "https://github.com/kazmiali/mailtester.git",
     "directory": "packages/core"
   },
   "bugs": {
-    "url": "https://github.com/alikazmi/mailtester/issues"
+    "url": "https://github.com/kazmiali/mailtester/issues"
   },
-  "homepage": "https://github.com/alikazmi/mailtester#readme",
+  "homepage": "https://github.com/kazmiali/mailtester#readme",
   "engines": {
     "node": ">=20.0.0"
   },
