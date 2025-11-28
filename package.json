@@ -31,12 +31,12 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/alikazmi/mailtester.git"
+    "url": "https://github.com/kazmiali/mailtester.git"
   },
   "bugs": {
-    "url": "https://github.com/alikazmi/mailtester/issues"
+    "url": "https://github.com/kazmiali/mailtester/issues"
   },
-  "homepage": "https://github.com/alikazmi/mailtester#readme",
+  "homepage": "https://github.com/kazmiali/mailtester#readme",
   "engines": {
     "node": ">=20.0.0",
     "yarn": ">=4.0.0"
