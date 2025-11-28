@@ -96,7 +96,7 @@ This is the first stable release of `@mailtester/core`, a modern, high-performan
 - Package size: ~25KB gzipped
 
 ### Technical
-- Node.js 20+ required
+- Node.js 18+ required
 - TypeScript 5.3+ with strict mode
 - ESM and CommonJS dual exports
 - 90%+ test coverage (644 tests)

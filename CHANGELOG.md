@@ -43,7 +43,7 @@ This is the first stable release of `@mailtester/core`, a modern, high-performan
 
 ### Technical Details
 
-- **Node.js 20+** required
+- **Node.js 18+** required
 - **TypeScript 5.3+** with strict mode
 - **Dual Module Support** - ESM and CommonJS exports
 - **90%+ Test Coverage** - 644 tests covering all functionality

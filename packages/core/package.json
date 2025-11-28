@@ -61,7 +61,7 @@
   },
   "homepage": "https://kazmiali.github.io/mailtester/",
   "engines": {
-    "node": ">=20.0.0"
+    "node": ">=18.0.0"
   },
   "devDependencies": {
     "@eslint/js": "^9.39.1",

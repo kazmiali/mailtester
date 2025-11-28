@@ -101,7 +101,7 @@ Three presets for common use cases:
 - **Zero config** - Works out of the box
 - **Tree-shakeable** - Import only what you need
 - **ESM + CJS** - Works everywhere
-- **Node.js 20+** - Modern runtime features
+- **Node.js 18+** - Modern runtime features
 
 ## When to Use
 
@@ -118,7 +118,7 @@ Three presets for common use cases:
 
 - You only need basic format validation → use `validator.js`
 - You need browser-side validation → use regex only
-- You're on Node.js < 20 → check compatibility
+- You're on Node.js < 18 → check compatibility
 
 ## Getting Started
 
