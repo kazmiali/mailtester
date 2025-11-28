@@ -6,11 +6,11 @@
 
 | Validator | Purpose | Speed | Network |
 |-----------|---------|-------|---------|
-| **Regex** | Format validation | ⚡ Instant | No |
-| **Typo** | Detect typos | ⚡ Instant | No |
-| **Disposable** | Block temp emails | ⚡ Instant | No |
-| **MX** | Verify mail servers | 🔄 ~50ms | Yes |
-| **SMTP** | Verify mailbox | 🔄 ~100ms | Yes |
+| **Regex** | Format validation | Instant | No |
+| **Typo** | Detect typos | Instant | No |
+| **Disposable** | Block temp emails | Instant | No |
+| **MX** | Verify mail servers | ~50ms | Yes |
+| **SMTP** | Verify mailbox | ~100ms | Yes |
 
 ## Regex Validator
 
@@ -18,10 +18,10 @@ Validates email format according to RFC 5322 standards.
 
 ### What it Checks
 
-- ✅ Valid email format (local@domain)
-- ✅ Proper character usage
-- ✅ Domain structure
-- ✅ Internationalized domain names (IDN)
+- Valid email format (local@domain)
+- Proper character usage
+- Domain structure
+- Internationalized domain names (IDN)
 
 ### Configuration
 
@@ -37,13 +37,13 @@ await validate('user@example.com', {
 
 | Email | Result | Reason |
 |-------|--------|--------|
-| `user@example.com` | ✅ Valid | Standard format |
-| `user+tag@example.com` | ✅ Valid | Plus addressing |
-| `user.name@example.com` | ✅ Valid | Dots in local |
-| `user@名がドメイン.com` | ✅ Valid | IDN support |
-| `invalid` | ❌ Invalid | Missing @ symbol |
-| `@example.com` | ❌ Invalid | Missing local part |
-| `user@` | ❌ Invalid | Missing domain |
+| `user@example.com` | Valid | Standard format |
+| `user+tag@example.com` | Valid | Plus addressing |
+| `user.name@example.com` | Valid | Dots in local |
+| `user@example.co.jp` | Valid | IDN support |
+| `invalid` | Invalid | Missing @ symbol |
+| `@example.com` | Invalid | Missing local part |
+| `user@` | Invalid | Missing domain |
 
 ---
 
@@ -53,9 +53,9 @@ Detects common domain typos and suggests corrections.
 
 ### What it Checks
 
-- ✅ Common domain misspellings
-- ✅ TLD typos
-- ✅ Keyboard proximity errors
+- Common domain misspellings
+- TLD typos
+- Keyboard proximity errors
 
 ### Configuration
 
@@ -96,9 +96,9 @@ Blocks temporary/disposable email services.
 
 ### What it Checks
 
-- ✅ 40,000+ known disposable domains
-- ✅ Pattern-based detection
-- ✅ Temporary email services
+- 40,000+ known disposable domains
+- Pattern-based detection
+- Temporary email services
 
 ### Configuration
 
@@ -136,9 +136,9 @@ Verifies domain has valid mail exchange (MX) servers.
 
 ### What it Checks
 
-- ✅ MX records exist
-- ✅ DNS resolution works
-- ✅ Fallback to A records if no MX
+- MX records exist
+- DNS resolution works
+- Fallback to A records if no MX
 
 ### Configuration
 
@@ -178,11 +178,11 @@ Verifies mailbox exists by connecting to the mail server.
 
 ### What it Checks
 
-- ✅ SMTP connection to port 25
-- ✅ HELO/EHLO handshake
-- ✅ MAIL FROM command
-- ✅ RCPT TO verification
-- ✅ Mailbox existence
+- SMTP connection to port 25
+- HELO/EHLO handshake
+- MAIL FROM command
+- RCPT TO verification
+- Mailbox existence
 
 ### Configuration
 

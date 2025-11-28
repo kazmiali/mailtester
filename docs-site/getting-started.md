@@ -150,7 +150,7 @@ console.log(`Valid: ${result.valid}/${result.total}`);
 
 ## Next Steps
 
-- 📖 Read the [API Reference](/api) for detailed documentation
-- 🔧 Learn about [Validators](/validators) and what each one checks
-- 💡 See more [Examples](/examples) for common use cases
+- Read the [API Reference](/api) for detailed documentation
+- Learn about [Validators](/validators) and what each one checks
+- See more [Examples](/examples) for common use cases
 

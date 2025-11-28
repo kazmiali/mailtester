@@ -18,18 +18,18 @@ Most libraries solve one problem. We solve them all.
 
 | Feature | @mailtester/core | deep-email-validator | email-validator |
 |---------|-----------------|---------------------|-----------------|
-| **RFC 5322 Regex** | ✅ Full | ✅ Full | ✅ Basic |
-| **Typo Detection** | ✅ Yes | ✅ Yes | ❌ No |
-| **Disposable Check** | ✅ 40K+ domains | ✅ Yes | ❌ No |
-| **MX Validation** | ✅ Yes | ✅ Yes | ❌ No |
-| **SMTP Validation** | ✅ Yes | ✅ Yes | ❌ No |
-| **Bulk Validation** | ✅ Built-in | ❌ No | ❌ No |
-| **Rate Limiting** | ✅ Built-in | ❌ No | ❌ No |
-| **TypeScript** | ✅ Native | ⚠️ Basic types | ⚠️ Basic types |
-| **Scoring** | ✅ 0-100 score | ❌ No | ❌ No |
-| **Performance** | ⚡ 3x faster | 🐢 Slower | ⚡ Fast |
-| **Bundle Size** | 📦 ~25KB | 📦 ~50KB+ | 📦 ~5KB |
-| **Maintained** | ✅ Active | ⚠️ Limited | ✅ Active |
+| **RFC 5322 Regex** | Full | Full | Basic |
+| **Typo Detection** | Yes | Yes | No |
+| **Disposable Check** | 40K+ domains | Yes | No |
+| **MX Validation** | Yes | Yes | No |
+| **SMTP Validation** | Yes | Yes | No |
+| **Bulk Validation** | Built-in | No | No |
+| **Rate Limiting** | Built-in | No | No |
+| **TypeScript** | Native | Basic types | Basic types |
+| **Scoring** | 0-100 score | No | No |
+| **Performance** | 3x faster | Slower | Fast |
+| **Bundle Size** | 25KB | 50KB+ | 5KB |
+| **Maintained** | Active | Limited | Active |
 
 ## Key Advantages
 
@@ -107,12 +107,12 @@ Three presets for common use cases:
 
 ### Use @mailtester/core when you need:
 
-- ✅ Comprehensive email validation
-- ✅ Bulk email list cleaning
-- ✅ User registration validation
-- ✅ Marketing email verification
-- ✅ TypeScript type safety
-- ✅ High performance at scale
+- Comprehensive email validation
+- Bulk email list cleaning
+- User registration validation
+- Marketing email verification
+- TypeScript type safety
+- High performance at scale
 
 ### Consider alternatives when:
 

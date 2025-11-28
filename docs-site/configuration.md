@@ -15,12 +15,12 @@ await validate('user@example.com', { preset: 'strict' });
 ```
 
 **What it enables:**
-- ✅ Regex validation
-- ✅ Typo detection
-- ✅ Disposable check
-- ✅ MX validation
-- ✅ SMTP validation
-- ✅ Early exit on failure
+- Regex validation
+- Typo detection
+- Disposable check
+- MX validation
+- SMTP validation
+- Early exit on failure
 
 **Best for:** User registration, important signups
 
@@ -35,12 +35,12 @@ await validate('user@example.com', { preset: 'balanced' });
 ```
 
 **What it enables:**
-- ✅ Regex validation
-- ✅ Typo detection
-- ✅ Disposable check
-- ✅ MX validation
-- ❌ SMTP validation (disabled)
-- ❌ Early exit (runs all validators)
+- Regex validation
+- Typo detection
+- Disposable check
+- MX validation
+- SMTP validation (disabled)
+- Early exit (runs all validators)
 
 **Best for:** General validation, forms, bulk processing
 
@@ -55,12 +55,12 @@ await validate('user@example.com', { preset: 'permissive' });
 ```
 
 **What it enables:**
-- ✅ Regex validation
-- ❌ Typo detection
-- ❌ Disposable check
-- ❌ MX validation
-- ❌ SMTP validation
-- ✅ Early exit on failure
+- Regex validation
+- Typo detection (disabled)
+- Disposable check (disabled)
+- MX validation (disabled)
+- SMTP validation (disabled)
+- Early exit on failure
 
 **Best for:** Quick format checks, client-side validation
 
