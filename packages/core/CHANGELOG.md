@@ -5,7 +5,11 @@ All notable changes to `@mailtester/core` will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [1.0.0-beta.1] - 2024-11-27
+## [1.0.0] - 2025-11-28
+
+### 🎉 First Stable Release!
+
+This is the first stable release of `@mailtester/core`, a modern, high-performance email validation library.
 
 ### Added
 
@@ -82,5 +86,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - ESM and CommonJS dual exports
 - 90%+ test coverage (644 tests)
 
-[1.0.0-beta.1]: https://github.com/kazmiali/mailtester/releases/tag/v1.0.0-beta.1
+---
 
+## [1.0.0-beta.1] - 2025-11-27
+
+### Added
+- Initial beta release with all core features
+- See [1.0.0] for full feature list
+
+[1.0.0]: https://github.com/kazmiali/mailtester/releases/tag/v1.0.0
+[1.0.0-beta.1]: https://github.com/kazmiali/mailtester/releases/tag/v1.0.0-beta.1

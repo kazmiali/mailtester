@@ -8,7 +8,7 @@ describe('mailtester setup verification', () => {
   it('should export VERSION constant', () => {
     expect(VERSION).toBeDefined();
     expect(typeof VERSION).toBe('string');
-    expect(VERSION).toBe('1.0.0-beta.1');
+    expect(VERSION).toBe('1.0.0');
   });
 
   it('should export validate function', () => {
