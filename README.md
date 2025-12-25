@@ -5,9 +5,8 @@
 **Modern, high-performance email validation for Node.js**
 
 [![npm version](https://img.shields.io/npm/v/@mailtester/core.svg?style=flat-square)](https://www.npmjs.com/package/@mailtester/core)
-[![npm downloads](https://img.shields.io/npm/dm/@mailtester/core.svg?style=flat-square)](https://www.npmjs.com/package/@mailtester/core)
+[![npm downloads](https://img.shields.io/npm/dt/@mailtester/core.svg?style=flat-square)](https://www.npmjs.com/package/@mailtester/core)
 [![Build Status](https://img.shields.io/github/actions/workflow/status/kazmiali/mailtester/ci.yml?branch=main&style=flat-square)](https://github.com/kazmiali/mailtester/actions)
-[![Coverage](https://img.shields.io/codecov/c/github/kazmiali/mailtester?style=flat-square)](https://codecov.io/gh/kazmiali/mailtester)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.3+-blue?style=flat-square)](https://www.typescriptlang.org/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg?style=flat-square)](https://opensource.org/licenses/MIT)
 
