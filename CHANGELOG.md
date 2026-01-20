@@ -5,6 +5,20 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.1.0] - 2026-01-20
+
+### Changed
+- **Node.js support expanded** from 18.0.0 to 16.0.0 for broader compatibility
+- Updated documentation to reflect Node 16 support
+
+### Updated
+- Root package.json engines: >=16.0.0
+- @mailtester/core package.json engines: >=16.0.0
+- README.md requirements section
+- Documentation site (getting-started.md, why.md)
+
+---
+
 ## [1.0.0] - 2025-11-28
 
 ### 🎉 First Stable Release!
@@ -77,5 +91,6 @@ This is the first stable release of `@mailtester/core`, a modern, high-performan
 - Browser-compatible build
 - Custom validator plugins
 
+[1.1.0]: https://github.com/kazmiali/mailtester/releases/tag/v1.1.0
 [1.0.0]: https://github.com/kazmiali/mailtester/releases/tag/v1.0.0
 [1.0.0-beta.1]: https://github.com/kazmiali/mailtester/releases/tag/v1.0.0-beta.1

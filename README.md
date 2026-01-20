@@ -53,7 +53,7 @@ See the [core package documentation](./packages/core/README.md) for detailed usa
 
 ## Requirements
 
-- Node.js 18.0.0 or higher
+- Node.js 16.0.0 or higher
 - TypeScript 5.3+ (for TypeScript users)
 
 ## Development

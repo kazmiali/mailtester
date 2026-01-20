@@ -1,6 +1,6 @@
 {
   "name": "@mailtester/core",
-  "version": "1.0.2",
+  "version": "1.1.0",
   "description": "Modern, high-performance email validation with RFC 5322 compliance, typo detection, disposable email blocking, MX verification, and SMTP validation",
   "type": "module",
   "main": "./dist/index.cjs",
@@ -61,7 +61,7 @@
   },
   "homepage": "https://kazmiali.github.io/mailtester/",
   "engines": {
-    "node": ">=18.0.0"
+    "node": ">=16.0.0"
   },
   "devDependencies": {
     "@eslint/js": "^9.39.1",

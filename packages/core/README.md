@@ -39,7 +39,7 @@ A comprehensive email validation library with RFC 5322 compliance, typo detectio
 
 ## Requirements
 
-- Node.js 18.0.0 or higher
+- Node.js 16.0.0 or higher
 - TypeScript 5.3+ (for TypeScript users)
 
 ## Installation
