@@ -2,13 +2,19 @@
  * Typo Detector Validator
  *
  * Detects and suggests corrections for common email domain typos.
- * Uses mailcheck library with expanded TLD coverage and custom domain support.
+ * Uses custom string distance algorithm with expanded TLD coverage and custom domain support.
  */
 
 import { BaseValidator } from './base';
 import type { ValidatorResult } from '../types';
 import { ValidationError, ErrorCode } from '../errors/errors';
-import mailcheck from 'mailcheck';
+import {
+  detectTypo,
+  calculateConfidence,
+  POPULAR_DOMAINS,
+  POPULAR_SECOND_LEVEL_DOMAINS,
+  POPULAR_TOP_LEVEL_DOMAINS,
+} from '../utils/typo-detector';
 
 /**
  * Configuration options for TypoValidator
@@ -17,18 +23,18 @@ export interface TypoValidatorConfig {
   enabled?: boolean;
   /**
    * Custom list of domains to check against
-   * @default mailcheck.defaultDomains
+   * @default POPULAR_DOMAINS
    */
   domains?: string[];
   /**
    * Custom list of second-level domains (e.g., "yahoo", "hotmail")
-   * @default mailcheck.defaultSecondLevelDomains
+   * @default POPULAR_SECOND_LEVEL_DOMAINS
    */
   secondLevelDomains?: string[];
   /**
    * Custom list of top-level domains (e.g., "com", "net", "org")
    * Expanded to 100+ TLDs by default
-   * @default expanded defaultTopLevelDomains
+   * @default POPULAR_TOP_LEVEL_DOMAINS
    */
   topLevelDomains?: string[];
   /**
@@ -40,141 +46,10 @@ export interface TypoValidatorConfig {
 }
 
 /**
- * Expanded list of top-level domains (100+ TLDs)
- * Includes common TLDs from mailcheck plus additional popular TLDs
- */
-const EXPANDED_TOP_LEVEL_DOMAINS = [
-  // Original mailcheck TLDs
-  'com',
-  'com.au',
-  'com.tw',
-  'ca',
-  'co.nz',
-  'co.uk',
-  'de',
-  'fr',
-  'it',
-  'ru',
-  'net',
-  'org',
-  'edu',
-  'gov',
-  'jp',
-  'nl',
-  'kr',
-  'se',
-  'eu',
-  'ie',
-  'co.il',
-  'us',
-  'at',
-  'be',
-  'dk',
-  'hk',
-  'es',
-  'gr',
-  'ch',
-  'no',
-  'cz',
-  'in',
-  'net.au',
-  'info',
-  'biz',
-  'mil',
-  'co.jp',
-  'sg',
-  'hu',
-  // Additional popular TLDs
-  'io',
-  'co',
-  'me',
-  'tv',
-  'cc',
-  'ws',
-  'name',
-  'mobi',
-  'asia',
-  'tel',
-  'travel',
-  'pro',
-  'aero',
-  'coop',
-  'museum',
-  'xxx',
-  'jobs',
-  'cat',
-  'post',
-  'xxx',
-  'app',
-  'dev',
-  'tech',
-  'online',
-  'site',
-  'website',
-  'store',
-  'shop',
-  'blog',
-  'cloud',
-  'email',
-  'news',
-  'media',
-  'space',
-  'world',
-  'global',
-  'digital',
-  'network',
-  'systems',
-  'solutions',
-  'services',
-  'support',
-  'help',
-  'info',
-  'click',
-  'link',
-  'click',
-  'top',
-  'xyz',
-  'win',
-  'bid',
-  'download',
-  'stream',
-  'video',
-  'photo',
-  'pics',
-  'pictures',
-  'gallery',
-  'photo',
-  'photos',
-  'pics',
-  'pictures',
-  'gallery',
-  'design',
-  'art',
-  'music',
-  'movie',
-  'film',
-  'video',
-  'tv',
-  'radio',
-  'live',
-  'life',
-  'love',
-  'fun',
-  'cool',
-  'best',
-  'new',
-  'now',
-  'today',
-  'here',
-  'there',
-  'everywhere',
-];
-
-/**
  * Typo detection validator
  *
  * Detects common typos in email domains and suggests corrections.
- * Uses mailcheck library with expanded TLD coverage.
+ * Uses custom Levenshtein distance algorithm with expanded TLD coverage.
  *
  * @example
  * ```typescript
@@ -196,10 +71,9 @@ export class TypoValidator extends BaseValidator {
   constructor(config?: TypoValidatorConfig) {
     super('typo', { enabled: config?.enabled ?? true });
 
-    // Use custom domains or default from mailcheck
-    this.domains = config?.domains ?? mailcheck.defaultDomains;
-    this.secondLevelDomains = config?.secondLevelDomains ?? mailcheck.defaultSecondLevelDomains;
-    this.topLevelDomains = config?.topLevelDomains ?? EXPANDED_TOP_LEVEL_DOMAINS;
+    this.domains = config?.domains ?? POPULAR_DOMAINS;
+    this.secondLevelDomains = config?.secondLevelDomains ?? POPULAR_SECOND_LEVEL_DOMAINS;
+    this.topLevelDomains = config?.topLevelDomains ?? POPULAR_TOP_LEVEL_DOMAINS;
     this.threshold = config?.threshold ?? 0.8;
   }
 
@@ -230,18 +104,13 @@ export class TypoValidator extends BaseValidator {
         );
       }
 
-      // Use mailcheck to detect typos
-      // mailcheck.run() returns synchronously, so we wrap it in Promise.resolve()
-      const suggestion = await Promise.resolve(
-        mailcheck.run({
-          email: normalized,
-          domains: this.domains,
-          secondLevelDomains: this.secondLevelDomains,
-          topLevelDomains: this.topLevelDomains,
-        })
-      );
+      const suggestion = detectTypo(normalized, {
+        domains: this.domains,
+        secondLevelDomains: this.secondLevelDomains,
+        topLevelDomains: this.topLevelDomains,
+        threshold: 0.7,
+      });
 
-      // If no suggestion, email domain is correct
       if (!suggestion) {
         return this.createResult(true, {
           checked: true,
@@ -249,11 +118,7 @@ export class TypoValidator extends BaseValidator {
         });
       }
 
-      // Calculate confidence score based on distance
-      // Lower distance = higher confidence
-      const distance = mailcheck.sift3Distance(domain, suggestion.domain);
-      const maxLength = Math.max(domain.length, suggestion.domain.length);
-      const confidence = maxLength > 0 ? 1 - distance / maxLength : 0;
+      const confidence = calculateConfidence(domain, suggestion.domain);
 
       // If confidence is below threshold, don't flag as typo
       if (confidence < this.threshold) {

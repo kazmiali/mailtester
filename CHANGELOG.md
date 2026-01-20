@@ -5,6 +5,28 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.1.1] - 2026-01-20
+
+### Changed
+- **Replaced mailcheck dependency** with custom Levenshtein distance implementation
+- Improved typo detection algorithm with better accuracy
+- Reduced bundle size by removing external dependency
+
+### Removed
+- `mailcheck` dependency (deprecated library, last updated 2014)
+- `@types/mailcheck` type definitions
+
+### Added
+- Custom string distance utilities (`levenshteinDistance`, `similarityScore`, `findClosestMatch`)
+- Enhanced typo detection with 60+ popular domains and 100+ TLDs
+- Smart typo detection that avoids false positives
+
+### Fixed
+- Typo detection now properly handles correct domains without suggesting changes
+- Improved confidence scoring for typo suggestions
+
+---
+
 ## [1.1.0] - 2026-01-20
 
 ### Changed
@@ -91,6 +113,7 @@ This is the first stable release of `@mailtester/core`, a modern, high-performan
 - Browser-compatible build
 - Custom validator plugins
 
+[1.1.1]: https://github.com/kazmiali/mailtester/releases/tag/v1.1.1
 [1.1.0]: https://github.com/kazmiali/mailtester/releases/tag/v1.1.0
 [1.0.0]: https://github.com/kazmiali/mailtester/releases/tag/v1.0.0
 [1.0.0-beta.1]: https://github.com/kazmiali/mailtester/releases/tag/v1.0.0-beta.1

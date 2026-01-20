@@ -65,7 +65,6 @@
   },
   "devDependencies": {
     "@eslint/js": "^9.39.1",
-    "@types/mailcheck": "^1.1.37",
     "@types/node": "^24.10.1",
     "@typescript-eslint/eslint-plugin": "^8.47.0",
     "@typescript-eslint/parser": "^8.47.0",
@@ -79,7 +78,6 @@
     "vitest": "^4.0.12"
   },
   "dependencies": {
-    "disposable-email-domains": "^1.0.62",
-    "mailcheck": "^1.1.1"
+    "disposable-email-domains": "^1.0.62"
   }
 }
