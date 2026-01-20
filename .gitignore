@@ -68,3 +68,4 @@ docs-site/.vitepress/dist/
 # Documentation and research (kept local)
 docs/
 research/
+temp-test-project/
