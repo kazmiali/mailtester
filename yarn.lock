@@ -1016,12 +1016,12 @@ __metadata:
   linkType: hard
 
 "@mailtester/core@file:../core::locator=test-consumer%40workspace%3Apackages%2Ftest-consumer":
-  version: 1.0.2
-  resolution: "@mailtester/core@file:../core#../core::hash=a62af6&locator=test-consumer%40workspace%3Apackages%2Ftest-consumer"
+  version: 1.1.1
+  resolution: "@mailtester/core@file:../core#../core::hash=7dfed0&locator=test-consumer%40workspace%3Apackages%2Ftest-consumer"
   dependencies:
     disposable-email-domains: "npm:^1.0.62"
     mailcheck: "npm:^1.1.1"
-  checksum: 10c0/a5f6fa38b6585a4e9c585ec63899a7645a2ff7c4c98ee23e6660c8478de276bac832b9adda1de1910a148483f2b798080c85e6152c1bfcf0386f93b5d4dba271
+  checksum: 10c0/ff4c32fb6f458c606507bbfd50c0b3b76dd960a31516848cc4f913215fa6f0937f42570bc4ef533b1cab708f45a2e8d1b63404ed5125368dfb832b39483cf440
   languageName: node
   linkType: hard
 

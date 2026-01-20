@@ -24,7 +24,7 @@ jobs:
           cache: 'yarn'
 
       - name: Install dependencies
-        run: yarn install --immutable
+        run: yarn install --refresh-lockfile
 
       - name: Run ESLint
         run: yarn lint
@@ -49,7 +49,7 @@ jobs:
           cache: 'yarn'
 
       - name: Install dependencies
-        run: yarn install --immutable
+        run: yarn install --refresh-lockfile
 
       - name: Run TypeScript type checking
         run: yarn typecheck
@@ -108,7 +108,7 @@ jobs:
           cache: 'yarn'
 
       - name: Install dependencies
-        run: yarn install --immutable
+        run: yarn install --refresh-lockfile
 
       - name: Build package
         run: yarn build
