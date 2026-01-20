@@ -10,6 +10,6 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@mailtester/core": "file:../core"
+    "@mailtester/core": "workspace:*"
   }
 }

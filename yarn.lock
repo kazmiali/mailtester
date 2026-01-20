@@ -1015,17 +1015,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@mailtester/core@file:../core::locator=test-consumer%40workspace%3Apackages%2Ftest-consumer":
-  version: 1.1.1
-  resolution: "@mailtester/core@file:../core#../core::hash=7dfed0&locator=test-consumer%40workspace%3Apackages%2Ftest-consumer"
-  dependencies:
-    disposable-email-domains: "npm:^1.0.62"
-    mailcheck: "npm:^1.1.1"
-  checksum: 10c0/ff4c32fb6f458c606507bbfd50c0b3b76dd960a31516848cc4f913215fa6f0937f42570bc4ef533b1cab708f45a2e8d1b63404ed5125368dfb832b39483cf440
-  languageName: node
-  linkType: hard
-
-"@mailtester/core@workspace:packages/core":
+"@mailtester/core@workspace:*, @mailtester/core@workspace:packages/core":
   version: 0.0.0-use.local
   resolution: "@mailtester/core@workspace:packages/core"
   dependencies:
@@ -4861,7 +4851,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "test-consumer@workspace:packages/test-consumer"
   dependencies:
-    "@mailtester/core": "file:../core"
+    "@mailtester/core": "workspace:*"
   languageName: unknown
   linkType: soft
 
