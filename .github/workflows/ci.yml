@@ -74,7 +74,7 @@ jobs:
           cache: 'yarn'
 
       - name: Install dependencies
-        run: yarn install --immutable
+        run: yarn install --refresh-lockfile
 
       - name: Run tests
         run: yarn test
