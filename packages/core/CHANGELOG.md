@@ -29,7 +29,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [1.0.2] - 2025-11-28
 
 ### Added
-- **Documentation Site** - VitePress-powered documentation at https://kazmiali.github.io/mailtester/
+- **Documentation Site** - VitePress-powered documentation at https://mailtester.alikazmi.dev/mailtester/
   - Getting Started guide
   - API Reference
   - Validators documentation
