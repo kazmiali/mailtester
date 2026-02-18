@@ -26,7 +26,7 @@ export default defineConfig({
       {
         text: 'v1.0.2',
         items: [
-          { text: 'Changelog', link: 'https://github.com/kazmiali/mailtester/blob/main/CHANGELOG.md' },
+          { text: 'Changelog', link: '/changelog' },
           { text: 'npm', link: 'https://www.npmjs.com/package/@mailtester/core' }
         ]
       }
@@ -49,18 +49,25 @@ export default defineConfig({
             { text: 'Configuration', link: '/configuration' },
             { text: 'Examples', link: '/examples' }
           ]
+        },
+        {
+          text: 'More',
+          items: [
+            { text: 'Changelog', link: '/changelog' }
+          ]
         }
       ]
     },
 
     socialLinks: [
       { icon: 'github', link: 'https://github.com/kazmiali/mailtester' },
-      { icon: 'npm', link: 'https://www.npmjs.com/package/@mailtester/core' }
+      { icon: 'npm', link: 'https://www.npmjs.com/package/@mailtester/core' },
+      { icon: 'linkedin', link: 'https://linkedin.com/in/alikazmidev' }
     ],
 
     footer: {
       message: 'Released under the MIT License.',
-      copyright: 'Copyright © 2024 Ali Kazmi'
+      copyright: 'Copyright © 2026 <a href="https://alikazmi.dev" target="_blank" rel="noopener">Muhammad Ali Kazmi</a>'
     },
 
     search: {

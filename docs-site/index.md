@@ -69,3 +69,23 @@ console.log(`Valid: ${result.valid}/${result.total}`);
 | Bulk Validation | Built-in | No |
 | Rate Limiting | Built-in | No |
 | Maintained | Active | Limited |
+
+## About the Author
+
+<div class="author-card">
+  <div class="author-avatar">MAK</div>
+  <div class="author-info">
+    <h3>Muhammad Ali Kazmi</h3>
+    <p>Full-stack developer passionate about building fast, developer-friendly open-source tools. <code>@mailtester/core</code> is crafted with care to solve real-world email validation challenges.</p>
+    <div class="author-links">
+      <a href="https://alikazmi.dev" target="_blank" rel="noopener" class="author-link author-link--portfolio">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+        alikazmi.dev
+      </a>
+      <a href="https://linkedin.com/in/alikazmidev" target="_blank" rel="noopener" class="author-link author-link--linkedin">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
+        alikazmidev
+      </a>
+    </div>
+  </div>
+</div>
