@@ -13,6 +13,7 @@ export default defineConfig({
 
   head: [
     ['link', { rel: 'icon', type: 'image/svg+xml', href: '/logo.svg' }],
+    ['meta', { name: 'google-site-verification', content: 'tgwMGsiNBR4Z1ayY2eN4axCmmYTy8_lNgrvk_KX8KFE' }],
     ['meta', { name: 'theme-color', content: '#6366f1' }],
     ['meta', { name: 'keywords', content: 'nodejs email validation, email validator npm, typescript email validation, smtp email verification nodejs, disposable email detection, mx record check, bulk email validation, rfc 5322 email regex' }],
     // Open Graph
