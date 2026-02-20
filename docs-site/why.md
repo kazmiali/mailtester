@@ -1,6 +1,18 @@
-# Why mailtester?
+---
+title: 'Why mailtester? — Best Node.js Email Validation Library 2026'
+description: 'Compare mailtester vs deep-email-validator and other npm email validation packages. 3x faster, 25KB vs 50KB+, TypeScript-first, built-in bulk validation and rate limiting.'
+head:
+  - - meta
+    - name: keywords
+      content: 'best nodejs email validation library 2026, email validator comparison npm, mailtester vs deep-email-validator, lightweight email validation nodejs, npm email check library'
+  - - link
+    - rel: canonical
+      href: 'https://mailtester.alikazmi.dev/why'
+---
 
-There are many email validation libraries out there. Here's why @mailtester/core stands out.
+# Why mailtester? — Best Node.js Email Validation Library
+
+There are many email validation libraries out there. Here's why `@mailtester/core` stands out.
 
 ## The Problem
 

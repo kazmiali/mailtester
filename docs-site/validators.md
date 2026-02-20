@@ -1,6 +1,18 @@
-# Validators
+---
+title: 'Email Validators — Regex, Typo, Disposable, MX, SMTP'
+description: 'How mailtester validates emails in Node.js: RFC 5322 regex checker, typo detection, disposable/temporary email blocking, MX record lookup, and SMTP mailbox verification.'
+head:
+  - - meta
+    - name: keywords
+      content: 'disposable email detection nodejs, smtp email verification nodejs, mx record check nodejs, rfc 5322 email validation, email typo detection javascript, block temporary email nodejs, check if email exists nodejs'
+  - - link
+    - rel: canonical
+      href: 'https://mailtester.alikazmi.dev/validators'
+---
 
-@mailtester/core includes 5 validators that work together to comprehensively validate email addresses.
+# Email Validation Methods — How mailtester Works
+
+`@mailtester/core` includes 5 validators that work together to comprehensively validate email addresses in Node.js.
 
 ## Overview
 

@@ -1,3 +1,15 @@
+---
+title: 'Configuration & Presets — mailtester Node.js Email Validation'
+description: 'Configure @mailtester/core with presets (strict, balanced, fast) or fine-grained validator options. Control timeouts, concurrency, scoring, early exit, and caching for Node.js email validation.'
+head:
+  - - meta
+    - name: keywords
+      content: 'email validation configuration nodejs, email validator presets, smtp validator settings nodejs, bulk email validation options, disable smtp validation nodejs, email validation timeout'
+  - - link
+    - rel: canonical
+      href: 'https://mailtester.alikazmi.dev/configuration'
+---
+
 # Configuration
 
 Customize validation behavior with presets or fine-grained options.

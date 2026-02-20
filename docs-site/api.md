@@ -1,6 +1,18 @@
+---
+title: 'API Reference — @mailtester/core Node.js Email Validation'
+description: 'Complete API docs for @mailtester/core. validate(), validateBulk(), ValidationResult, Config options, TypeScript types, presets, and all configuration options.'
+head:
+  - - meta
+    - name: keywords
+      content: 'email validation api nodejs, validate email function typescript, validateBulk nodejs, email validation typescript types, mailtester api reference'
+  - - link
+    - rel: canonical
+      href: 'https://mailtester.alikazmi.dev/api'
+---
+
 # API Reference
 
-Complete API documentation for @mailtester/core.
+Complete API documentation for `@mailtester/core`. All functions are async and TypeScript-first.
 
 ## Functions
 

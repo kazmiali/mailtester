@@ -1,6 +1,18 @@
-# Getting Started
+---
+title: 'Getting Started — Install Node.js Email Validator'
+description: 'Install @mailtester/core and validate emails in Node.js in minutes. Supports npm, yarn, pnpm. Works with TypeScript and CommonJS. Node.js 16+ required.'
+head:
+  - - meta
+    - name: keywords
+      content: 'install email validator nodejs, npm email validation package, how to validate email in nodejs, email validation tutorial nodejs, typescript email validator install'
+  - - link
+    - rel: canonical
+      href: 'https://mailtester.alikazmi.dev/getting-started'
+---
 
-Get up and running with @mailtester/core in minutes.
+# Getting Started with Node.js Email Validation
+
+Get up and running with `@mailtester/core` — a fast, lightweight email validation library for Node.js — in minutes.
 
 ## Requirements
 

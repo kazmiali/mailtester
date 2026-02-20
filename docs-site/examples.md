@@ -1,6 +1,18 @@
+---
+title: 'Examples — Node.js Email Validation Code Samples'
+description: 'Real-world Node.js email validation examples: Express.js user registration, bulk CSV processing, Next.js API routes, TypeScript integration, React form validation, and more.'
+head:
+  - - meta
+    - name: keywords
+      content: 'nodejs email validation example, expressjs email validation, nextjs email validation api route, bulk email validation nodejs, typescript email validator example, react email validation'
+  - - link
+    - rel: canonical
+      href: 'https://mailtester.alikazmi.dev/examples'
+---
+
 # Examples
 
-Real-world examples for common use cases.
+Real-world Node.js email validation examples for common use cases.
 
 ## Basic Validation
 

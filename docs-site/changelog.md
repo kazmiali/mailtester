@@ -1,3 +1,12 @@
+---
+title: 'Changelog — @mailtester/core'
+description: 'Release history and changelog for @mailtester/core Node.js email validation library. All notable changes, new features, and breaking changes documented.'
+head:
+  - - link
+    - rel: canonical
+      href: 'https://mailtester.alikazmi.dev/changelog'
+---
+
 # Changelog
 
 All notable changes to `@mailtester/core` are documented here.

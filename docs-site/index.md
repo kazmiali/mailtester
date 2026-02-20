@@ -1,5 +1,20 @@
 ---
 layout: home
+title: 'Node.js Email Validation Library — mailtester'
+description: 'Fast, lightweight Node.js email validation. Validates format (RFC 5322), detects typos, blocks disposable emails, checks MX records & SMTP. TypeScript-first. npm install @mailtester/core'
+head:
+  - - meta
+    - name: keywords
+      content: 'nodejs email validation, email validator npm, typescript email validation, smtp email check nodejs, disposable email detection, mx record validation, bulk email validation, check email exists nodejs'
+  - - meta
+    - property: og:title
+      content: 'Node.js Email Validation Library — mailtester'
+  - - meta
+    - property: og:description
+      content: 'Fast, lightweight email validation for Node.js. Detect typos, block disposable emails, verify MX & SMTP. TypeScript-first. 25KB.'
+  - - link
+    - rel: canonical
+      href: 'https://mailtester.alikazmi.dev/'
 
 hero:
   name: "@mailtester/core"

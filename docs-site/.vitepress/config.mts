@@ -1,18 +1,35 @@
 import { defineConfig } from 'vitepress'
 
 export default defineConfig({
-  title: '@mailtester/core',
-  description: 'Modern, high-performance email validation for Node.js',
-  
+  title: 'mailtester',
+  titleTemplate: ':title — mailtester | Node.js Email Validation',
+  description: 'Fast, lightweight Node.js email validation library. Validates format (RFC 5322), detects typos, blocks disposable emails, checks MX records & SMTP. TypeScript-first. 25KB gzipped.',
+
   base: '/',
-  
+
+  sitemap: {
+    hostname: 'https://mailtester.alikazmi.dev'
+  },
+
   head: [
     ['link', { rel: 'icon', type: 'image/svg+xml', href: '/logo.svg' }],
     ['meta', { name: 'theme-color', content: '#6366f1' }],
+    ['meta', { name: 'keywords', content: 'nodejs email validation, email validator npm, typescript email validation, smtp email verification nodejs, disposable email detection, mx record check, bulk email validation, rfc 5322 email regex' }],
+    // Open Graph
     ['meta', { property: 'og:type', content: 'website' }],
-    ['meta', { property: 'og:title', content: '@mailtester/core - Email Validation' }],
-    ['meta', { property: 'og:description', content: 'Modern, high-performance email validation for Node.js' }],
+    ['meta', { property: 'og:site_name', content: 'mailtester' }],
+    ['meta', { property: 'og:title', content: 'mailtester — Node.js Email Validation Library' }],
+    ['meta', { property: 'og:description', content: 'Fast, lightweight Node.js email validation. Detect typos, block disposable emails, verify MX & SMTP. TypeScript-first. 25KB.' }],
     ['meta', { property: 'og:url', content: 'https://mailtester.alikazmi.dev/' }],
+    ['meta', { property: 'og:image', content: 'https://mailtester.alikazmi.dev/og-image.png' }],
+    ['meta', { property: 'og:image:width', content: '1200' }],
+    ['meta', { property: 'og:image:height', content: '630' }],
+    // Twitter / X
+    ['meta', { name: 'twitter:card', content: 'summary_large_image' }],
+    ['meta', { name: 'twitter:site', content: '@alikazmidev' }],
+    ['meta', { name: 'twitter:title', content: 'mailtester — Node.js Email Validation Library' }],
+    ['meta', { name: 'twitter:description', content: 'Fast, lightweight Node.js email validation. Detect typos, block disposable emails, verify MX & SMTP. TypeScript-first. 25KB.' }],
+    ['meta', { name: 'twitter:image', content: 'https://mailtester.alikazmi.dev/og-image.png' }],
   ],
 
   themeConfig: {
