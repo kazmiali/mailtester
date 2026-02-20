@@ -2,3 +2,4 @@ User-agent: *
 Allow: /
 
 Sitemap: https://mailtester.alikazmi.dev/sitemap.xml
+LLMs: https://mailtester.alikazmi.dev/llms.txt
