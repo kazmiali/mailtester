@@ -1,4 +1,6 @@
 import { defineConfig } from 'vitepress'
+import llmstxt from 'vitepress-plugin-llms'
+import { copyOrDownloadAsMarkdownButtons } from 'vitepress-plugin-llms'
 
 export default defineConfig({
   title: 'mailtester',
@@ -6,6 +8,21 @@ export default defineConfig({
   description: 'Fast, lightweight Node.js email validation library. Validates format (RFC 5322), detects typos, blocks disposable emails, checks MX records & SMTP. TypeScript-first. 25KB gzipped.',
 
   base: '/',
+
+  vite: {
+    plugins: [
+      llmstxt({
+        generateLLMsFullTxt: true,
+        ignoreFiles: ['changelog.md']
+      })
+    ]
+  },
+
+  markdown: {
+    config(md) {
+      md.use(copyOrDownloadAsMarkdownButtons)
+    }
+  },
 
   sitemap: {
     hostname: 'https://mailtester.alikazmi.dev'
