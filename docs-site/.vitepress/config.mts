@@ -48,6 +48,14 @@ export default defineConfig({
     ['meta', { name: 'twitter:title', content: 'mailtester — Node.js Email Validation Library' }],
     ['meta', { name: 'twitter:description', content: 'Fast, lightweight Node.js email validation. Detect typos, block disposable emails, verify MX & SMTP. TypeScript-first. 25KB.' }],
     ['meta', { name: 'twitter:image', content: 'https://mailtester.alikazmi.dev/og-image.png' }],
+    // Microsoft Clarity Analytics
+    ['script', { async: '', defer: '', 'data-spa': 'auto' }, `
+      (function(c,l,a,r,i,t,y){
+        c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+        t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+        y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+      })(window,document,"clarity","script","vqyz7pn45j");
+    `],
   ],
 
   themeConfig: {
