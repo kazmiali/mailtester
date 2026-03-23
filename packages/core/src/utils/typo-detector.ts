@@ -119,6 +119,7 @@ export const POPULAR_TOP_LEVEL_DOMAINS = [
   'eu',
   'ie',
   'co.il',
+  'co.in',
   'us',
   'at',
   'be',
