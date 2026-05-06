@@ -625,24 +625,24 @@ td {
 
 .author-link--portfolio {
   border-color: var(--bauhaus-blue);
-  color: var(--bauhaus-blue);
+  color: var(--bauhaus-blue) !important;
   background: transparent;
 }
 
 .author-link--portfolio:hover {
   background: var(--bauhaus-blue);
-  color: var(--bauhaus-white);
+  color: #ffffff !important;
 }
 
 .author-link--linkedin {
   border-color: var(--bauhaus-red);
-  color: var(--bauhaus-red);
+  color: var(--bauhaus-red) !important;
   background: transparent;
 }
 
 .author-link--linkedin:hover {
   background: var(--bauhaus-red);
-  color: var(--bauhaus-white);
+  color: #ffffff !important;
 }
 
 .dark .author-card {

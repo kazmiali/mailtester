@@ -97,7 +97,8 @@ export default defineConfig({
     socialLinks: [
       { icon: 'github', link: 'https://github.com/kazmiali/mailtester' },
       { icon: 'npm', link: 'https://www.npmjs.com/package/@mailtester/core' },
-      { icon: 'linkedin', link: 'https://linkedin.com/in/alikazmidev' }
+      { icon: 'linkedin', link: 'https://linkedin.com/in/alikazmidev' },
+      { icon: 'globe', link: 'https://alikazmi.dev', ariaLabel: 'Portfolio' }
     ],
 
     footer: {
