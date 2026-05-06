@@ -5,6 +5,16 @@ All notable changes to `@mailtester/core` will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.1.3] - 2026-05-06
+
+### Fixed
+- Added `co.in` to typo detector TLD list for better Indian email validation
+
+### Changed
+- Updated documentation homepage URL to https://mailtester.alikazmi.dev/
+
+---
+
 ## [1.1.0] - 2026-01-20
 
 ### Changed
@@ -130,6 +140,7 @@ This is the first stable release of `@mailtester/core`, a modern, high-performan
 - Initial beta release with all core features
 - See [1.0.0] for full feature list
 
+[1.1.3]: https://github.com/kazmiali/mailtester/releases/tag/v1.1.3
 [1.1.0]: https://github.com/kazmiali/mailtester/releases/tag/v1.1.0
 [1.0.0]: https://github.com/kazmiali/mailtester/releases/tag/v1.0.0
 [1.0.0-beta.1]: https://github.com/kazmiali/mailtester/releases/tag/v1.0.0-beta.1

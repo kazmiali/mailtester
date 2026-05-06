@@ -15,6 +15,13 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) 
 
 ---
 
+## [1.1.3] — 2026-05-06
+
+### Fixed
+- Added `co.in` to typo detector TLD list for better Indian email validation
+
+---
+
 ## [1.1.2] — 2026-01-20
 
 ### Changed
@@ -142,6 +149,7 @@ This is the first stable release of `@mailtester/core`.
 - Browser-compatible build
 - Custom validator plugins
 
+[1.1.3]: https://github.com/kazmiali/mailtester/releases/tag/v1.1.3
 [1.1.2]: https://github.com/kazmiali/mailtester/releases/tag/v1.1.2
 [1.1.1]: https://github.com/kazmiali/mailtester/releases/tag/v1.1.1
 [1.1.0]: https://github.com/kazmiali/mailtester/releases/tag/v1.1.0
