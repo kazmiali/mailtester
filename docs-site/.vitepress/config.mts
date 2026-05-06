@@ -59,7 +59,7 @@ export default defineConfig({
       { text: 'API', link: '/api' },
       { text: 'Examples', link: '/examples' },
       {
-        text: 'v1.0.2',
+        text: 'v1.1.3',
         items: [
           { text: 'Changelog', link: '/changelog' },
           { text: 'npm', link: 'https://www.npmjs.com/package/@mailtester/core' }
