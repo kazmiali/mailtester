@@ -129,18 +129,19 @@ describe('E2E Validation - Full Pipeline', () => {
           regex: { enabled: true },
           typo: { enabled: true },
           disposable: { enabled: true },
+          mx: { enabled: false },
+          smtp: { enabled: false },
         },
       });
 
-      // Email with typo (gmaill.com instead of gmail.com)
-      const result = await validator.validate('user@gmaill.com');
+      // Typo that is NOT also a disposable domain (gmaill.com is blocklisted).
+      const result = await validator.validate('user@protonmai.com');
 
-      // Typo warnings don't trigger early exit
+      // Typo warnings don't trigger early exit — disposable still runs
       expect(result.validators.regex).toBeDefined();
       expect(result.validators.typo).toBeDefined();
-      // Disposable might not run if typo triggers early exit incorrectly
-      // But typo warnings shouldn't trigger early exit, so disposable should run
-      // However, if disposable is disabled or not configured, it won't run
+      expect(result.validators.disposable).toBeDefined();
+      expect(result.validators.disposable?.valid).toBe(true);
       // Email should still be valid (typo is warning, not error)
       expect(result.valid).toBe(true);
     });

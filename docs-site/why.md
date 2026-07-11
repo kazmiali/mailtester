@@ -113,7 +113,7 @@ Three presets for common use cases:
 - **Zero config** - Works out of the box
 - **Tree-shakeable** - Import only what you need
 - **ESM + CJS** - Works everywhere
-- **Node.js 16+** - Modern runtime features
+- **Node.js 20+** - Modern runtime features
 
 ## When to Use
 

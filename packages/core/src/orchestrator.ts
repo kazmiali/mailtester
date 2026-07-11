@@ -87,8 +87,10 @@ export class ValidationOrchestrator {
         // Store result in context
         context.results[validatorName] = result;
 
-        // Check for early exit
-        if (config.earlyExit && !result.valid) {
+        // Early exit only on hard failures. Warning-severity results (e.g. typo
+        // suggestions) must not short-circuit the pipeline — otherwise later
+        // validators like disposable never run for domains such as gmaill.com.
+        if (config.earlyExit && !result.valid && result.error?.severity !== 'warning') {
           logger.debug(`Early exit triggered by ${validatorName} validator`);
           break;
         }

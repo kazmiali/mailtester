@@ -211,14 +211,15 @@ describe('ValidationOrchestrator', () => {
         },
       });
       const config = configManager.get();
-      // Email with typo (gmaill instead of gmail)
-      const context = createContext('user@gmaill.com', config);
+      // Typo that is NOT also disposable (gmaill.com is on the blocklist)
+      const context = createContext('user@protonmai.com', config);
 
       const result = await orchestrator.validate(context);
 
       // Typo warnings don't fail validation
       expect(result.valid).toBe(true);
       expect(result.validators.typo).toBeDefined();
+      expect(result.validators.disposable?.valid).toBe(true);
       // Typo validator may return valid: false but with warning severity
       if (result.validators.typo && !result.validators.typo.valid) {
         expect(result.validators.typo.error?.severity).toBe('warning');

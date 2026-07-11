@@ -92,7 +92,7 @@ class ExampleValidator extends BaseValidator {
 **Key validators:**
 - `RegexValidator` - RFC 5322 format validation ([validators/regex.ts](packages/core/src/validators/regex.ts))
 - `TypoValidator` - Common typo detection with suggestions ([validators/typo.ts](packages/core/src/validators/typo.ts))
-- `DisposableValidator` - Blocks 40k+ disposable email domains ([validators/disposable.ts](packages/core/src/validators/disposable.ts))
+- `DisposableValidator` - Blocks 160k+ disposable email domains via `detect-disposable-email` ([validators/disposable.ts](packages/core/src/validators/disposable.ts))
 - `MXValidator` - DNS MX record verification ([validators/mx.ts](packages/core/src/validators/mx.ts))
 - `SMTPValidator` - Mailbox existence verification via SMTP ([validators/smtp.ts](packages/core/src/validators/smtp.ts))
 
@@ -153,7 +153,7 @@ import { promises as dns } from 'node:dns'
 import { setTimeout } from 'node:timers/promises'
 import type { MxRecord } from 'node:dns'
 
-import { disposableDomains } from 'disposable-email-domains'
+import { isDisposableDomain } from 'detect-disposable-email'
 
 import type { ValidationContext } from '@/context'
 import { ValidationError } from '@/errors/errors'
@@ -225,7 +225,7 @@ describe('ComponentName', () => {
 The project uses custom runtime validation (not Zod) for dependency-free config validation. See [schemas.ts](packages/core/src/schemas.ts) for patterns. Always validate config with schemas before use.
 
 ### Disposable Domain Loading
-Domains are lazy-loaded on first validation to reduce initial memory footprint. Do not import directly - use `DisposableValidator`'s internal loading.
+Detection uses `detect-disposable-email` (`isDisposableDomain`), which lazy-builds lookup Sets on first use. Prefer `DisposableValidator` over calling the data package directly from app code.
 
 ### SMTP Connection Handling
 SMTP validator uses TCP sockets with optional TLS. Connections timeout after configured duration (default 10s). Pooling is implemented for bulk operations.

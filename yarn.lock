@@ -842,7 +842,7 @@ __metadata:
     "@typescript-eslint/eslint-plugin": "npm:^8.47.0"
     "@typescript-eslint/parser": "npm:^8.47.0"
     "@vitest/coverage-v8": "npm:^4.0.12"
-    disposable-email-domains: "npm:^1.0.62"
+    detect-disposable-email: "npm:^1.1.0"
     eslint: "npm:^9.39.1"
     eslint-config-prettier: "npm:^10.1.8"
     eslint-plugin-prettier: "npm:^5.5.4"
@@ -2441,6 +2441,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"detect-disposable-email@npm:^1.1.0":
+  version: 1.1.0
+  resolution: "detect-disposable-email@npm:1.1.0"
+  checksum: 10c0/9465713d7c50ae7d839e6f2675945626ed3c2ffffbe143b308c040069da656974b090a29dbcb65bc7f3ee5cea8a2bc3939cd50bfc0b42a1fe65a346c63a364ee
+  languageName: node
+  linkType: hard
+
 "devlop@npm:^1.0.0":
   version: 1.1.0
   resolution: "devlop@npm:1.1.0"
@@ -2454,13 +2461,6 @@ __metadata:
   version: 5.2.2
   resolution: "diff@npm:5.2.2"
   checksum: 10c0/52da594c54e9033423da26984b1449ae6accd782d5afc4431c9a192a8507ddc83120fe8f925d7220b9da5b5963c7b6f5e46add3660a00cb36df7a13420a09d4b
-  languageName: node
-  linkType: hard
-
-"disposable-email-domains@npm:^1.0.62":
-  version: 1.0.62
-  resolution: "disposable-email-domains@npm:1.0.62"
-  checksum: 10c0/556062c5bc93cb712e7b6d05323555d0940b2ffbcdd560a21e23cf56fccf7fd71e623091891b04616326974e7c0880357df8627e40f280edd92a7c513376e983
   languageName: node
   linkType: hard
 

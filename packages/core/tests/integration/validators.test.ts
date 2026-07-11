@@ -248,7 +248,9 @@ describe('Integration Tests - All Validators', () => {
     }, 30000);
 
     it('should detect typo in domain', async () => {
-      const result = await runAllValidators('test@gmaill.com', {
+      // Use a typo that is NOT also on the disposable list (gmaill.com is
+      // correctly blocked as disposable by detect-disposable-email).
+      const result = await runAllValidators('test@protonmai.com', {
         skipMX: true,
         skipSMTP: true,
       });
@@ -258,10 +260,23 @@ describe('Integration Tests - All Validators', () => {
       // Typo validator should detect the typo
       if (result.validators.typo?.error) {
         expect(result.validators.typo.error.code).toBe('TYPO_DETECTED');
-        expect(result.validators.typo.error.suggestion).toContain('gmail.com');
+        expect(result.validators.typo.error.suggestion).toContain('protonmail.com');
       }
-      // Typo doesn't fail validation, just warns
+      // Typo is a warning only; domain is not disposable
+      expect(result.validators.disposable?.valid).toBe(true);
       expect(result.overallValid).toBe(true);
+    });
+
+    it('should reject known typo domains that are also disposable (gmaill.com)', async () => {
+      const result = await runAllValidators('test@gmaill.com', {
+        skipMX: true,
+        skipSMTP: true,
+      });
+
+      expect(result.validators.regex?.valid).toBe(true);
+      expect(result.validators.disposable?.valid).toBe(false);
+      expect(result.failedValidators).toContain('disposable');
+      expect(result.overallValid).toBe(false);
     });
   });
 

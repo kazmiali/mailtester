@@ -29,7 +29,7 @@ export default defineConfig({
   outDir: 'dist',
   
   // External dependencies (don't bundle - let users install them)
-  external: ['disposable-email-domains', 'mailcheck'],
+  external: ['detect-disposable-email', 'mailcheck'],
   
   // Don't bundle dependencies - they'll be installed separately
   // This reduces bundle size significantly

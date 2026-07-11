@@ -108,7 +108,7 @@ Blocks temporary/disposable email services.
 
 ### What it Checks
 
-- 40,000+ known disposable domains
+- 160,000+ known disposable domains (exact + wildcard matching via `detect-disposable-email`)
 - Pattern-based detection
 - Temporary email services
 
@@ -129,7 +129,7 @@ await validate('user@mailinator.com', {
 - 10minutemail.com
 - tempmail.com
 - throwaway.email
-- And 40,000+ more...
+- And 160,000+ more...
 
 ### Example
 

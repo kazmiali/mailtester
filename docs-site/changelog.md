@@ -15,6 +15,25 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) 
 
 ---
 
+## [1.2.0] — 2026-07-12
+
+### Changed
+- **Disposable detection** now uses [`detect-disposable-email`](https://www.npmjs.com/package/detect-disposable-email) `^1.1.0` instead of the unmaintained `disposable-email-domains` package
+- Domain dataset expanded to **~167k** exact-match domains + **399** wildcard bases
+- Matching includes **wildcard subdomains** and IDN-aware lookups
+- **Node.js requirement raised to ≥ 20.0.0**
+
+### Fixed
+- Early exit no longer stops on **warning-severity** results (e.g. typo suggestions), so disposable and later validators still run
+
+### Removed
+- Dependency on `disposable-email-domains` and fragile require/file-load fallbacks
+
+### Notes
+- Public API is unchanged. Behavior is intentionally stricter (more burner domains blocked). Use `customWhitelist` if a legitimate domain is flagged.
+
+---
+
 ## [1.1.3] — 2026-05-06
 
 ### Fixed

@@ -5,6 +5,27 @@ All notable changes to `@mailtester/core` will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.2.0] - 2026-07-12
+
+### Changed
+- **Disposable detection** now uses [`detect-disposable-email`](https://www.npmjs.com/package/detect-disposable-email) `^1.1.0` instead of the unmaintained `disposable-email-domains` package.
+- Domain dataset expanded to **~167k** exact-match domains + **399** wildcard bases (multi-source, actively maintained).
+- Matching now includes **wildcard subdomains** (e.g. `x.y.10mail.org`) and IDN-aware lookups — not only exact domain equality.
+- **Node.js requirement raised to ≥ 20.0.0** (aligned with `detect-disposable-email` and current LTS).
+
+### Fixed
+- **Early exit no longer stops on warning-severity results** (e.g. typo suggestions). Previously, with default `earlyExit: true`, a typo warning could skip disposable (and later) checks — so addresses like `user@gmaill.com` could pass overall validation without a disposable check.
+
+### Removed
+- Dependency on `disposable-email-domains` and the brittle `require()` / JSON-file fallback loaders.
+
+### Notes for consumers
+- **Public API is unchanged** (`validate()`, config keys, error codes, whitelist/blacklist/pattern options).
+- **Behavior is intentionally stricter:** more temporary / burner domains are blocked. Major free providers (Gmail, Outlook, Proton, etc.) remain allowed.
+- If a legitimate domain is flagged, use `validators.disposable.customWhitelist` or report it for a data fix in `detect-disposable-email`.
+
+---
+
 ## [1.1.3] - 2026-05-06
 
 ### Fixed

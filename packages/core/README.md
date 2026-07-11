@@ -27,18 +27,18 @@ A comprehensive email validation library with RFC 5322 compliance, typo detectio
 
 - **RFC 5322 Compliant** — Full regex validation with strict and loose modes
 - **Typo Detection** — Suggests corrections for common domain typos (gmaill.com → gmail.com)
-- **Disposable Email Blocking** — Detects 40,000+ temporary email services
+- **Disposable Email Blocking** — Detects 160,000+ temporary email services (exact + wildcard)
 - **MX Record Validation** — Verifies domain has valid mail servers
 - **SMTP Verification** — Checks if mailbox actually exists
 - **Bulk Validation** — Process thousands of emails concurrently
 - **Rate Limiting** — Built-in protection against API abuse
 - **TypeScript First** — Full type safety with strict mode
 - **Zero Config** — Sensible defaults, works out of the box
-- **Lightweight** — ~25KB gzipped, minimal dependencies
+- **Lightweight** — Core logic stays small; disposable data is a dedicated dependency
 
 ## Requirements
 
-- Node.js 16.0.0 or higher
+- Node.js 20.0.0 or higher
 - TypeScript 5.3+ (for TypeScript users)
 
 ## Installation
@@ -310,7 +310,7 @@ Blocks temporary/disposable email services.
 ```
 
 **Blocks:**
-- 40,000+ known disposable domains
+- 160,000+ known disposable domains (via `detect-disposable-email`)
 - Pattern-based detection
 - Temporary email services
 

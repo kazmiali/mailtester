@@ -43,17 +43,17 @@ See the [core package documentation](./packages/core/README.md) for detailed usa
 
 - **RFC 5322 Compliant** — Full regex validation with strict and loose modes
 - **Typo Detection** — Suggests corrections for common domain typos
-- **Disposable Email Blocking** — Detects 40,000+ temporary email services
+- **Disposable Email Blocking** — Detects 160,000+ temporary email services
 - **MX Record Validation** — Verifies domain has valid mail servers
 - **SMTP Verification** — Checks if mailbox actually exists
 - **Bulk Validation** — Process thousands of emails concurrently
 - **Rate Limiting** — Built-in protection against API abuse
 - **TypeScript First** — Full type safety with strict mode
-- **Lightweight** — ~25KB gzipped, minimal dependencies
+- **Lightweight** — Core logic stays small; disposable data is a dedicated dependency
 
 ## Requirements
 
-- Node.js 16.0.0 or higher
+- Node.js 20.0.0 or higher
 - TypeScript 5.3+ (for TypeScript users)
 
 ## Development

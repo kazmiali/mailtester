@@ -123,6 +123,28 @@ describe('DisposableValidator', () => {
         expect(result.valid).toBe(false);
         expect(result.error?.code).toBe(ErrorCode.DISPOSABLE_DOMAIN);
       });
+
+      it('should reject ubicloud.com (known disposable)', async () => {
+        const result = await validator.validate('user@ubicloud.com');
+        expect(result.valid).toBe(false);
+        expect(result.error?.code).toBe(ErrorCode.DISPOSABLE_DOMAIN);
+        const details = result.error?.details as Record<string, unknown>;
+        expect(details?.reason).toBe('known_disposable');
+      });
+
+      it('should reject deep wildcard subdomains (e.g. x.y.10mail.org)', async () => {
+        const result = await validator.validate('user@x.y.10mail.org');
+        expect(result.valid).toBe(false);
+        expect(result.error?.code).toBe(ErrorCode.DISPOSABLE_DOMAIN);
+        const details = result.error?.details as Record<string, unknown>;
+        expect(details?.reason).toBe('known_disposable');
+      });
+
+      it('should reject multi-label wildcard bases (e.g. cad.edu.gr)', async () => {
+        const result = await validator.validate('user@cad.edu.gr');
+        expect(result.valid).toBe(false);
+        expect(result.error?.code).toBe(ErrorCode.DISPOSABLE_DOMAIN);
+      });
     });
 
     describe('non-disposable domains', () => {
