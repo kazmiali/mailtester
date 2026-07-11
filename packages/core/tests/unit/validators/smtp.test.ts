@@ -82,7 +82,7 @@ describe('SMTPValidator', () => {
       const result = await validator.validate('user@nonexistent-domain-xyz-12345.com');
       expect(result.valid).toBe(false);
       expect(result.error?.code).toBe(ErrorCode.MX_NOT_FOUND);
-    });
+    }, 10000);
 
     it('should use MX record for real domain', async () => {
       // Gmail has MX records
@@ -316,13 +316,21 @@ describe('SMTPValidator', () => {
     }, 8000);
 
     it('should include error details when validation fails', async () => {
-      const result = await validator.validate('test@nonexistent-domain-xyz-12345.com');
+      // Dedicated short timeouts: CI DNS for NXDOMAIN can be slow; Vitest's
+      // default 5s test budget is too tight when DNS hangs near that limit.
+      const v = new SMTPValidator({
+        enabled: true,
+        timeout: 2000,
+        retries: 0,
+        verifyMailbox: true,
+      });
+      const result = await v.validate('test@nonexistent-domain-xyz-12345.com');
 
       expect(result.valid).toBe(false);
       expect(result.error).toBeDefined();
       expect(result.error?.code).toBeDefined();
       expect(result.error?.message).toBeDefined();
-    }, 5000);
+    }, 10000);
   });
 
   describe('validate() - edge cases', () => {
