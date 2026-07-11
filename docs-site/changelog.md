@@ -17,20 +17,31 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) 
 
 ## [1.2.0] — 2026-07-12
 
+> **Latest release** on npm: [`@mailtester/core@1.2.0`](https://www.npmjs.com/package/@mailtester/core)
+
 ### Changed
-- **Disposable detection** now uses [`detect-disposable-email`](https://www.npmjs.com/package/detect-disposable-email) `^1.1.0` instead of the unmaintained `disposable-email-domains` package
-- Domain dataset expanded to **~167k** exact-match domains + **399** wildcard bases
-- Matching includes **wildcard subdomains** and IDN-aware lookups
-- **Node.js requirement raised to ≥ 20.0.0**
+- **Disposable detection** now uses [`detect-disposable-email`](https://www.npmjs.com/package/detect-disposable-email) `^1.1.0` (resolves to **1.1.1+**) instead of the unmaintained `disposable-email-domains` package
+- Domain dataset expanded to **~167k** exact-match domains + **399** wildcard bases (multi-source, actively maintained)
+- Matching includes **wildcard subdomains** (e.g. `x.y.10mail.org`) and IDN-aware lookups — not only exact domain equality
+- **Node.js requirement raised to ≥ 20.0.0** (aligned with `detect-disposable-email` and current LTS)
 
 ### Fixed
-- Early exit no longer stops on **warning-severity** results (e.g. typo suggestions), so disposable and later validators still run
+- **Early exit no longer stops on warning-severity results** (e.g. typo suggestions). Previously, with default `earlyExit: true`, a typo warning could skip disposable (and later) checks — so addresses like `user@gmaill.com` could pass overall validation without a disposable check
 
 ### Removed
-- Dependency on `disposable-email-domains` and fragile require/file-load fallbacks
+- Dependency on `disposable-email-domains` and fragile `require()` / JSON-file load fallbacks
 
-### Notes
-- Public API is unchanged. Behavior is intentionally stricter (more burner domains blocked). Use `customWhitelist` if a legitimate domain is flagged.
+### Notes for consumers
+- **Public API is unchanged** (`validate()`, config keys, error codes, whitelist / blacklist / pattern options)
+- **Behavior is intentionally stricter:** more temporary / burner domains are blocked. Major free providers (Gmail, Outlook, Proton, etc.) remain allowed
+- If a legitimate domain is flagged, use `validators.disposable.customWhitelist` or report it for a data fix upstream in [`detect-disposable-email`](https://github.com/kazmiali/detect-disposable-email)
+
+### Upgrade
+
+```bash
+npm install @mailtester/core@1.2.0
+# requires Node.js 20+
+```
 
 ---
 
@@ -157,17 +168,22 @@ This is the first stable release of `@mailtester/core`.
 
 ## Roadmap
 
-### Planned for v1.2.0
-- Enhanced reputation scoring with configurable weights
-- In-memory LRU caching for improved performance
-- Domain reputation database
-- MX quality scoring enhancements
+### Shipped in v1.2.0
+- Migrated disposable detection to [`detect-disposable-email`](https://www.npmjs.com/package/detect-disposable-email) (~167k domains + wildcards)
+- Node.js 20+ requirement
+- Early-exit fix so typo warnings do not skip disposable checks
 
 ### Planned for v1.3.0
+- Enhanced reputation scoring with configurable weights
+- In-memory LRU caching for improved performance
+- Domain reputation database / MX quality scoring enhancements
+
+### Planned for v1.4.0
 - Plugin system for third-party integrations
 - Browser-compatible build
 - Custom validator plugins
 
+[1.2.0]: https://github.com/kazmiali/mailtester/compare/v1.1.3...main
 [1.1.3]: https://github.com/kazmiali/mailtester/releases/tag/v1.1.3
 [1.1.2]: https://github.com/kazmiali/mailtester/releases/tag/v1.1.2
 [1.1.1]: https://github.com/kazmiali/mailtester/releases/tag/v1.1.1

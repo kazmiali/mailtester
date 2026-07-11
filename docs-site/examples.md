@@ -52,6 +52,24 @@ if (!result.validators.mx?.valid) {
 }
 ```
 
+### Allow a domain that was flagged disposable
+
+```typescript
+// Whitelist overrides the ~167k domain list and patterns
+const result = await validate('user@partner-corp.com', {
+  validators: {
+    disposable: {
+      enabled: true,
+      customWhitelist: ['partner-corp.com']
+    }
+  }
+});
+```
+
+> **v1.2.0+:** Disposable data comes from
+> [`detect-disposable-email`](https://www.npmjs.com/package/detect-disposable-email)
+> (exact + wildcard). See the [Changelog](/changelog).
+
 ---
 
 ## User Registration

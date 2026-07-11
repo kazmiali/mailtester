@@ -5,7 +5,7 @@ import { copyOrDownloadAsMarkdownButtons } from 'vitepress-plugin-llms'
 export default defineConfig({
   title: 'mailtester',
   titleTemplate: ':title — mailtester | Node.js Email Validation',
-  description: 'Fast, lightweight Node.js email validation library. Validates format (RFC 5322), detects typos, blocks disposable emails, checks MX records & SMTP. TypeScript-first. 25KB gzipped.',
+  description: 'Fast, lightweight Node.js email validation library. Validates format (RFC 5322), detects typos, blocks 160k+ disposable emails, checks MX records & SMTP. TypeScript-first. Node 20+.',
 
   base: '/',
 
@@ -59,10 +59,14 @@ export default defineConfig({
       { text: 'API', link: '/api' },
       { text: 'Examples', link: '/examples' },
       {
-        text: 'v1.1.3',
+        text: 'v1.2.0',
         items: [
           { text: 'Changelog', link: '/changelog' },
-          { text: 'npm', link: 'https://www.npmjs.com/package/@mailtester/core' }
+          { text: 'npm', link: 'https://www.npmjs.com/package/@mailtester/core' },
+          {
+            text: 'detect-disposable-email',
+            link: 'https://www.npmjs.com/package/detect-disposable-email'
+          }
         ]
       }
     ],

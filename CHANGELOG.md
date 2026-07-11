@@ -5,6 +5,19 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+Package-level history for `@mailtester/core` lives in
+[`packages/core/CHANGELOG.md`](./packages/core/CHANGELOG.md) and on the docs site:
+[mailtester.alikazmi.dev/changelog](https://mailtester.alikazmi.dev/changelog).
+
+## [1.2.0] - 2026-07-12
+
+### @mailtester/core
+
+- Switched disposable detection to [`detect-disposable-email`](https://www.npmjs.com/package/detect-disposable-email) (~167k domains + wildcards)
+- Node.js requirement raised to **≥ 20**
+- Early exit no longer skips disposable after typo warnings
+- See [`packages/core/CHANGELOG.md`](./packages/core/CHANGELOG.md) for full notes
+
 ## [1.1.2] - 2026-01-20
 
 ### Changed

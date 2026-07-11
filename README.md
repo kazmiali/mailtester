@@ -39,6 +39,10 @@ console.log(result.score);  // 85
 
 See the [core package documentation](./packages/core/README.md) for detailed usage instructions.
 
+**Docs site:** [mailtester.alikazmi.dev](https://mailtester.alikazmi.dev/) ·
+[Changelog](https://mailtester.alikazmi.dev/changelog) ·
+[package CHANGELOG](./packages/core/CHANGELOG.md)
+
 ## Features
 
 - **RFC 5322 Compliant** — Full regex validation with strict and loose modes

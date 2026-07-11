@@ -32,7 +32,7 @@ Most libraries solve one problem. We solve them all.
 |---------|-----------------|---------------------|-----------------|
 | **RFC 5322 Regex** | Full | Full | Basic |
 | **Typo Detection** | Yes | Yes | No |
-| **Disposable Check** | 40K+ domains | Yes | No |
+| **Disposable Check** | 160K+ domains + wildcards | Yes | No |
 | **MX Validation** | Yes | Yes | No |
 | **SMTP Validation** | Yes | Yes | No |
 | **Bulk Validation** | Built-in | No | No |
@@ -130,7 +130,7 @@ Three presets for common use cases:
 
 - You only need basic format validation → use `validator.js`
 - You need browser-side validation → use regex only
-- You're on Node.js < 16 → check compatibility
+- You're on Node.js < 20 → upgrade Node, or use an older `@mailtester/core` release
 
 ## Getting Started
 

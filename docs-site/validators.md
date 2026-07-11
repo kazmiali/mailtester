@@ -104,23 +104,47 @@ if (result.validators.typo?.details?.suggestion) {
 
 ## Disposable Validator
 
-Blocks temporary/disposable email services.
+Blocks temporary / disposable email services used for fake signups.
 
 ### What it Checks
 
-- 160,000+ known disposable domains (exact + wildcard matching via `detect-disposable-email`)
-- Pattern-based detection
-- Temporary email services
+- **~167,000** known disposable domains via [`detect-disposable-email`](https://www.npmjs.com/package/detect-disposable-email) (exact match)
+- **399** wildcard base domains (any subdomain of a base is disposable, e.g. `x.y.10mail.org`)
+- Pattern-based heuristics (`tempmail*`, `10minutemail*`, `throwaway*`, …)
+- Custom **blacklist** / **whitelist** you configure
+
+### Data source (v1.2.0+)
+
+| Item | Detail |
+|------|--------|
+| Package | [`detect-disposable-email`](https://www.npmjs.com/package/detect-disposable-email) |
+| Replaces | Unmaintained `disposable-email-domains` |
+| Matching | Exact + wildcard parent walk + IDN/punycode |
+| Updates | Data refreshed upstream; mailtester depends on `^1.1.0` |
 
 ### Configuration
 
 ```typescript
 await validate('user@mailinator.com', {
   validators: {
-    disposable: { enabled: true }  // Default: true
+    disposable: {
+      enabled: true,                    // Default: true
+      customBlacklist: ['spam.example'], // Always treat as disposable
+      customWhitelist: ['partner.com'],  // Always allow (even if in list)
+      enablePatternDetection: true       // Default: true
+    }
   }
 });
 ```
+
+| Option | Type | Default | Description |
+|--------|------|---------|-------------|
+| `enabled` | `boolean` | `true` | Run disposable checks |
+| `customBlacklist` | `string[]` | `[]` | Domains always blocked |
+| `customWhitelist` | `string[]` | `[]` | Domains always allowed (overrides list + patterns) |
+| `enablePatternDetection` | `boolean` | `true` | Heuristic name patterns |
+
+**Priority order:** whitelist → blacklist → known list (exact/wildcard) → patterns.
 
 ### Blocked Services (Examples)
 
@@ -129,7 +153,8 @@ await validate('user@mailinator.com', {
 - 10minutemail.com
 - tempmail.com
 - throwaway.email
-- And 160,000+ more...
+- Wildcard subdomains such as `anything.10mail.org`
+- And **160,000+** more...
 
 ### Example
 
@@ -138,7 +163,26 @@ const result = await validate('test@mailinator.com');
 
 console.log(result.valid);   // false
 console.log(result.reason);  // "disposable"
+console.log(result.validators.disposable?.error?.details);
+// { domain: 'mailinator.com', reason: 'known_disposable' }
 ```
+
+### False positives
+
+If a legitimate domain is blocked, allow it locally:
+
+```typescript
+await validate('user@legit-corp.com', {
+  validators: {
+    disposable: {
+      enabled: true,
+      customWhitelist: ['legit-corp.com']
+    }
+  }
+});
+```
+
+Or open an issue on [detect-disposable-email](https://github.com/kazmiali/detect-disposable-email) for a data fix.
 
 ---
 

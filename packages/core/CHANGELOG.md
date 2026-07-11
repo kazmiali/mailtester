@@ -161,6 +161,7 @@ This is the first stable release of `@mailtester/core`, a modern, high-performan
 - Initial beta release with all core features
 - See [1.0.0] for full feature list
 
+[1.2.0]: https://github.com/kazmiali/mailtester/compare/v1.1.3...main
 [1.1.3]: https://github.com/kazmiali/mailtester/releases/tag/v1.1.3
 [1.1.0]: https://github.com/kazmiali/mailtester/releases/tag/v1.1.0
 [1.0.0]: https://github.com/kazmiali/mailtester/releases/tag/v1.0.0

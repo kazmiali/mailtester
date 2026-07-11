@@ -190,16 +190,30 @@ Validation configuration options.
 interface Config {
   preset?: 'strict' | 'balanced' | 'permissive';
   validators?: {
-    regex?: { enabled: boolean };
-    typo?: { enabled: boolean };
-    disposable?: { enabled: boolean };
-    mx?: { enabled: boolean };
-    smtp?: { enabled: boolean };
+    regex?: { enabled?: boolean; mode?: 'strict' | 'loose' };
+    typo?: { enabled?: boolean; threshold?: number; domains?: string[] };
+    disposable?: {
+      enabled?: boolean;
+      customBlacklist?: string[];
+      customWhitelist?: string[];
+      enablePatternDetection?: boolean;
+    };
+    mx?: { enabled?: boolean; timeout?: number; retries?: number };
+    smtp?: {
+      enabled?: boolean;
+      timeout?: number;
+      retries?: number;
+      sender?: string;
+      verifyMailbox?: boolean;
+      port?: number;
+    };
   };
-  earlyExit?: boolean;
+  earlyExit?: boolean; // Stops on error-severity failures only (not typo warnings)
   timeout?: number;
 }
 ```
+
+See [Validators](/validators) and [Configuration](/configuration) for full option details.
 
 ### ValidatorInstance
 
@@ -229,9 +243,26 @@ interface ValidatorInstance {
 | Option | Type | Default | Description |
 |--------|------|---------|-------------|
 | `preset` | `string` | — | Use preset: `'strict'`, `'balanced'`, `'permissive'` |
-| `validators` | `object` | — | Enable/disable individual validators |
-| `earlyExit` | `boolean` | `true` | Stop validation on first failure |
+| `validators` | `object` | — | Enable/disable validators and pass per-validator options |
+| `earlyExit` | `boolean` | `true` | Stop on first **error** (typo warnings do not early-exit) |
 | `timeout` | `number` | — | Overall timeout in milliseconds |
+
+### Disposable options (v1.2.0+)
+
+Disposable checks use [`detect-disposable-email`](https://www.npmjs.com/package/detect-disposable-email) (~167k domains + wildcards).
+
+```typescript
+await validate('user@mailinator.com', {
+  validators: {
+    disposable: {
+      enabled: true,
+      customWhitelist: ['partner.com'],
+      customBlacklist: ['blocked.example'],
+      enablePatternDetection: true
+    }
+  }
+});
+```
 
 ---
 

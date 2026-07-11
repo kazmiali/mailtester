@@ -35,9 +35,9 @@ features:
   - title: Blazing Fast
     details: 3x faster than alternatives. Single validation under 150ms, bulk 100 emails in under 5 seconds.
   - title: Comprehensive Validation
-    details: 5 validators - Regex (RFC 5322), Typo Detection, Disposable Blocking, MX Records, and SMTP verification.
+    details: 5 validators - Regex (RFC 5322), Typo Detection, 160k+ disposable domains (wildcards), MX Records, and SMTP verification.
   - title: Lightweight
-    details: Only 25KB gzipped with minimal dependencies. No bloat, just what you need.
+    details: Small core bundle; disposable data ships via detect-disposable-email. No bloat beyond what you need.
   - title: TypeScript First
     details: Built with TypeScript 5.3+ strict mode. Full type safety and IntelliSense support.
   - title: Bulk Processing

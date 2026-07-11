@@ -17,6 +17,7 @@ A comprehensive email validation library with RFC 5322 compliance, typo detectio
 [Quick Start](#quick-start) •
 [API Reference](#api-reference) •
 [Configuration](#configuration) •
+[Changelog](./CHANGELOG.md) •
 [License](#license)
 
 </div>
@@ -302,17 +303,31 @@ Detects common domain typos and suggests corrections.
 
 ### Disposable Validator
 
-Blocks temporary/disposable email services.
+Blocks temporary/disposable email services using
+[`detect-disposable-email`](https://www.npmjs.com/package/detect-disposable-email)
+(~167k exact domains + 399 wildcards, IDN-aware).
 
 ```typescript
 // Enabled by default
-{ disposable: { enabled: true } }
+{
+  disposable: {
+    enabled: true,
+    customBlacklist: [],           // always block
+    customWhitelist: [],           // always allow (overrides list)
+    enablePatternDetection: true   // name heuristics
+  }
+}
 ```
 
 **Blocks:**
-- 160,000+ known disposable domains (via `detect-disposable-email`)
-- Pattern-based detection
-- Temporary email services
+- 160,000+ known disposable domains (exact match)
+- Wildcard subdomains (e.g. `x.y.10mail.org`)
+- Pattern-based detection (`tempmail*`, `throwaway*`, …)
+- Your `customBlacklist`
+
+**Allow exceptions** with `customWhitelist` if a legitimate domain is flagged.
+
+See the full [Changelog](./CHANGELOG.md) for **v1.2.0** migration notes (Node 20+, stricter list, early-exit fix).
 
 ### MX Validator
 

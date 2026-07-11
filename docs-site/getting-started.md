@@ -16,25 +16,25 @@ Get up and running with `@mailtester/core` — a fast, lightweight email validat
 
 ## Requirements
 
-- **Node.js** 20.0.0 or higher
+- **Node.js** 20.0.0 or higher (required since **v1.2.0**)
 - **TypeScript** 5.3+ (for TypeScript users)
 
 ## Installation
 
-Install the package using your preferred package manager:
+Install the package using your preferred package manager (requires Node.js 20+):
 
 ::: code-group
 
 ```bash [npm]
-npm install @mailtester/core
+npm install @mailtester/core@^1.2.0
 ```
 
 ```bash [yarn]
-yarn add @mailtester/core
+yarn add @mailtester/core@^1.2.0
 ```
 
 ```bash [pnpm]
-pnpm add @mailtester/core
+pnpm add @mailtester/core@^1.2.0
 ```
 
 :::
@@ -64,6 +64,25 @@ if (!result.valid) {
   // Output: "Invalid: disposable"
 }
 ```
+
+### Disposable emails (v1.2.0+)
+
+Disposable detection uses [`detect-disposable-email`](https://www.npmjs.com/package/detect-disposable-email)
+(~167k domains + wildcards). Exact matches, subdomains of wildcard bases, and
+optional name patterns are blocked. Allow exceptions with a whitelist:
+
+```typescript
+await validate('user@partner.com', {
+  validators: {
+    disposable: {
+      enabled: true,
+      customWhitelist: ['partner.com']
+    }
+  }
+});
+```
+
+Full release notes: [Changelog](/changelog).
 
 ### Validation Result
 

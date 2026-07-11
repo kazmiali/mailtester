@@ -101,8 +101,8 @@ await validate('user@example.com', {
 | Option | Type | Default | Description |
 |--------|------|---------|-------------|
 | `preset` | `string` | — | Use preset: `'strict'`, `'balanced'`, `'permissive'` |
-| `validators` | `object` | — | Enable/disable individual validators |
-| `earlyExit` | `boolean` | `true` | Stop validation on first failure |
+| `validators` | `object` | — | Enable/disable individual validators (and per-validator options) |
+| `earlyExit` | `boolean` | `true` | Stop on the first **error-severity** failure (typo *warnings* do not stop the pipeline) |
 | `timeout` | `number` | — | Overall timeout in milliseconds |
 
 ## Validator Options
@@ -125,11 +125,29 @@ validators: {
 
 ### disposable
 
+Blocks temporary email domains using [`detect-disposable-email`](https://www.npmjs.com/package/detect-disposable-email) (~167k domains + wildcards), optional name patterns, and your own lists.
+
 ```typescript
 validators: {
-  disposable: { enabled: true }  // Default: true
+  disposable: {
+    enabled: true,                       // Default: true
+    customBlacklist: ['bad.example'],    // Always block
+    customWhitelist: ['partner.com'],    // Always allow
+    enablePatternDetection: true         // Default: true
+  }
 }
 ```
+
+| Option | Type | Default | Description |
+|--------|------|---------|-------------|
+| `enabled` | `boolean` | `true` | Enable disposable detection |
+| `customBlacklist` | `string[]` | `[]` | Domains always treated as disposable |
+| `customWhitelist` | `string[]` | `[]` | Domains always allowed (overrides the dataset) |
+| `enablePatternDetection` | `boolean` | `true` | Heuristic patterns like `tempmail*`, `throwaway*` |
+
+**Priority:** whitelist → blacklist → known list (exact + wildcard) → patterns.
+
+**v1.2.0 note:** Matching is stricter (larger list + wildcards). Typo *warnings* no longer short-circuit the pipeline when `earlyExit` is true — disposable still runs.
 
 ### mx
 
